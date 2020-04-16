@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SportStore.Application.Products;
 using SportStore.Application.Products.Queries;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace SportStore.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddTransient<IProductQueryFactory, ProductQueryFactory>();
+            services.AddTransient<IMapper, Mapper>();
             return services;
         }
 

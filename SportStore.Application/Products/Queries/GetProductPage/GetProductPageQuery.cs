@@ -8,35 +8,58 @@ using System.Threading.Tasks;
 
 namespace SportStore.Application.Products.Queries
 {
-    public class GetProductPageQuery : IQuery<IEnumerable<ProductDTO>>
+    public class GetProductPageQuery : IRequest<ProductPageVM>
+    {   
+        public GetProductPageQuery(int pageNumber, int pageSize)
+        {
+            PageNumber = pageNumber;
+            PageSize = pageSize;           
+        }
+        public int PageNumber { get; }
+        public int PageSize { get; }
+    }
+
+    public class GetProductPageQueryHandler : IRequestHandler<GetProductPageQuery, ProductPageVM>
     {
         private readonly IApplicationContext _context;
-        private readonly int _offset;
-        private readonly int _take;
-        public IMapper Mapper { get; set; }
+        private readonly IMapper _mapper;
 
-        public GetProductPageQuery(IApplicationContext context, int pageNumber, int pageSize)
+        public GetProductPageQueryHandler(IApplicationContext context, IMapper mapper)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(paramName: nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(paramName: nameof(mapper));
+        }
 
-            _offset = GetOffset(pageNumber, pageSize);
-            _take = pageSize;
-            Mapper = new Mapper();
-        }
-        private static int GetOffset(int pageNumber, int pageSize)
+        public async Task<ProductPageVM> Handle(GetProductPageQuery request)
         {
-            return (pageNumber > 0 ? pageNumber - 1 : 0) * pageSize;
-        }
-        public async Task<IEnumerable<ProductDTO>> Execute()
-        {
+
+            int offset = GetOffset(request);
+
             var products = await _context.Products
                 .OrderBy(p => p.Id)
-                .Skip(_offset)
-                .Take(_take)
+                .Skip(offset)
+                .Take(request.PageSize)
                 .Include(p => p.Category)
                 .ToListAsync();
 
-            return Mapper.MapProductsToDTO(products);
+            int productsCount = await _context.Products.CountAsync();
+
+            var Vm = new ProductPageVM()
+            {
+                Products = _mapper.MapProductsToDTO(products),
+                PageInfo = new PageInfo()
+                {
+                    ProductsCount = productsCount,
+                    CurrentPage = request.PageNumber //проблема - отображаемая страница при < 0
+                }
+            };
+
+            return Vm;            
+        }
+
+        private static int GetOffset(GetProductPageQuery request)
+        {
+            return (request.PageNumber > 0 ? request.PageNumber - 1 : 0) * request.PageSize;
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SportStore.Application.Products.Queries
 {
-    public class GetProductsQuery : IQuery<IEnumerable<ProductDTO>>
+    public class GetProductsQuery : IRequest<IEnumerable<ProductDTO>>
     {
         public GetProductsQuery(IApplicationContext context)
         {

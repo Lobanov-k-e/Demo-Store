@@ -10,10 +10,6 @@ namespace SportStore.Domain
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
-
-        //test
-
-        
+        public Category Category { get; set; }     
     }
 }

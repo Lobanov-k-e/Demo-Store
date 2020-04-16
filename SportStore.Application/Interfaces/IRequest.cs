@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace SportStore.Application.Interfaces
 {
-    public interface IQuery<T>
+    public interface IRequest<out T> 
     {
-        Task<T> Execute();
+        
     }
+
 }
