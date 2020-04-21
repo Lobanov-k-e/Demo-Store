@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SportStore.Application.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SportStore.Application.Products.Queries
 {
     public class GetProductPageQuery : IRequest<ProductPageVM>
-    {   
+    {   //validation needed
         public GetProductPageQuery(int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
@@ -49,11 +47,11 @@ namespace SportStore.Application.Products.Queries
                 Products = _mapper.MapProductsToDTO(products),
                 PageInfo = new PageInfo()
                 {
-                    ProductsCount = productsCount,
-                    CurrentPage = request.PageNumber //проблема - отображаемая страница при < 0
+                    ItemsCount = productsCount,
+                    CurrentPage = request.PageNumber, //проблема - отображаемая страница при < 0
+                    ItemsPerPage  = request.PageSize
                 }
             };
-
             return Vm;            
         }
 
@@ -61,5 +59,6 @@ namespace SportStore.Application.Products.Queries
         {
             return (request.PageNumber > 0 ? request.PageNumber - 1 : 0) * request.PageSize;
         }
+       
     }
 }

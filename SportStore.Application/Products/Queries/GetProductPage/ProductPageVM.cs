@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SportStore.Application.Products.Queries
 {
@@ -10,7 +11,9 @@ namespace SportStore.Application.Products.Queries
 
     public class PageInfo
     {
-        public int CurrentPage { get; internal set; }
-        public int ProductsCount { get; internal set; }
+        public int CurrentPage { get; set; }
+        public int ItemsCount { get; set; }
+        public int ItemsPerPage { get; set; }
+        public int TotalPages => (int)Math.Ceiling((decimal)ItemsCount / ItemsPerPage);
     }
 }

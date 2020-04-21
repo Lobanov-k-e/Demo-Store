@@ -10,11 +10,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStore.WebUi", "SportSt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStore.Domain", "SportStore.Domain\SportStore.Domain.csproj", "{F4EA19FD-99C6-4855-9E0F-4E9659FA4110}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStore.Tests", "SportStore.Tests\SportStore.Tests.csproj", "{3DD2F3B2-2217-440E-85C7-21EE72B34043}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStore.UnitTests", "SportStore.Tests\SportStore.UnitTests.csproj", "{3DD2F3B2-2217-440E-85C7-21EE72B34043}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStore.Application", "SportStore.Application\SportStore.Application.csproj", "{A2ABC3AF-7FED-4268-914A-A1DDD5AA5F14}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportStore.Infrastructure", "SportStore.Infrastructure\SportStore.Infrastructure.csproj", "{060681E0-9A52-49CE-8983-4C0374146414}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsStore.IntegrationTests", "SportsStore.IntegrationTests\SportsStore.IntegrationTests.csproj", "{10F896C2-BCFD-4F20-B37F-67EAC8705CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{060681E0-9A52-49CE-8983-4C0374146414}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{060681E0-9A52-49CE-8983-4C0374146414}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{060681E0-9A52-49CE-8983-4C0374146414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10F896C2-BCFD-4F20-B37F-67EAC8705CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10F896C2-BCFD-4F20-B37F-67EAC8705CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10F896C2-BCFD-4F20-B37F-67EAC8705CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10F896C2-BCFD-4F20-B37F-67EAC8705CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

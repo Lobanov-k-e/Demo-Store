@@ -12,34 +12,61 @@ namespace SportStore.Tests.UnitTests.Application.ProductTests
 {
     [TestFixture]
     class GetProductPageTests : TestBase
-    {
+    {      
         [Test]
         public async Task CanPaginate()
         {
-            var queryFactory = new ProductQueryFactory(_context);
             int pageNumber = 1;
-            int pageSize = 3;          
+            int pageSize = 3;
             
-            var query = queryFactory.GetProductPageQuery(pageNumber, pageSize);
-
-            var act = await query.Execute();            
-
-            Assert.IsTrue(act.Count() == 3);            
-        }
+            var query = new GetProductPageQuery(pageNumber, pageSize);
+            var result = await new GetProductPageQueryHandler(context, mapper).Handle(query);
+            Assert.NotNull(result as ProductPageVM);
+            Assert.IsTrue(result.Products.Count() == pageSize);                      
+        }       
 
         [Test]
         public async Task NegativeZeroPageNumber_ReturnsFirstPage()
         {
-            var queryFactory = new ProductQueryFactory(_context);
+            
+            int pageSize = 3;
+
             int pageNumber = 1;
-            int pageSize = 4;
+            var query = new GetProductPageQuery(pageNumber, pageSize);
+            var firstPage= await mediator.Handle(query);
 
-            var firstPage = await queryFactory.GetProductPageQuery(pageNumber, pageSize).Execute();          
-            var negativePage = await queryFactory.GetProductPageQuery(-1, pageSize).Execute();             
-            var zeroPage = await queryFactory.GetProductPageQuery(0, pageSize).Execute();
+            pageNumber = 0;
+            query = new GetProductPageQuery(pageNumber, pageSize);
+            var zeroPage = await mediator.Handle(query);
 
-            CollectionAssert.AreEqual(firstPage, negativePage, new ProductDTOByIdComparer());
-            CollectionAssert.AreEqual(firstPage, zeroPage, new ProductDTOByIdComparer());            
+            pageNumber = -1;
+            query = new GetProductPageQuery(pageNumber, pageSize);
+            var negativePage = await mediator.Handle(query);
+
+            CollectionAssert.AreEqual(firstPage.Products, zeroPage.Products, new ProductDTOByIdComparer());
+            CollectionAssert.AreEqual(firstPage.Products, negativePage.Products, new ProductDTOByIdComparer());
+        }
+
+        [Test]
+        public async Task Returns_CorrectPageInfo()
+        {
+            int pageNumber = 1;
+            int pageSize = 3;
+
+            var query = new GetProductPageQuery(pageNumber, pageSize);
+            var result = (await new GetProductPageQueryHandler(context, mapper).Handle(query)).PageInfo;
+
+            var expected = new PageInfo()
+            {
+                CurrentPage = pageNumber,
+                ItemsCount = context.Products.Count(),
+                ItemsPerPage = pageSize
+            };                         
+
+            Assert.AreEqual(expected.CurrentPage, result.CurrentPage);
+            Assert.AreEqual(expected.ItemsPerPage, result.ItemsPerPage);
+            Assert.AreEqual(expected.ItemsCount, result.ItemsCount);
+            Assert.AreEqual(expected.TotalPages, result.TotalPages);              
         }
 
      

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SportStore.Application.Products
 {
-    internal class Mapper : IMapper
+    public class Mapper : IMapper
     {
         public IEnumerable<ProductDTO> MapProductsToDTO(List<Product> products)
         {

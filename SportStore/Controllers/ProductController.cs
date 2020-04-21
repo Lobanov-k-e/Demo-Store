@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using SportStore.Application;
 using SportStore.Application.Products.Queries;
+using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductQueryFactory productQueryFactory;
+        private readonly Mediator _mediator;
 
-        public ProductController(IProductQueryFactory productQueryFactory)
+        public ProductController(Mediator mediator)
         {
-            this.productQueryFactory = productQueryFactory 
-                ?? throw new ArgumentNullException(paramName: nameof(productQueryFactory), 
-                message: "ProductQueryFactory should not be null");
+            _mediator = mediator;
         }
-        public async Task<IActionResult> ProductList(int pageNumber = 1)
+
+        public async Task<ActionResult> ProductList(int pageNumber = 1)
         {
-            const int DefaultPageSize = 4;
-            var query = productQueryFactory.GetProductPageQuery(pageNumber, DefaultPageSize);
-            return View(await query.Execute());
+            int pageSize = 3;
+            var result = await _mediator.Handle(new GetProductPageQuery(pageNumber, pageSize));
+            return View(result);
         }
     }
 }
