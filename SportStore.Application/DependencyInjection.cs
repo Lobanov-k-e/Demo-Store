@@ -13,7 +13,7 @@ namespace SportStore.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)       
         {            
             services.AddTransient<IMapper, Mapper>();
-            services.AddTransient<Mediator>();
+            services.AddTransient<IMediator, Mediator>();
             RegisterHandlers();
             return services;
         }

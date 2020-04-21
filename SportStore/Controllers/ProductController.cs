@@ -7,9 +7,9 @@ namespace SportStore.WebUi.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly Mediator _mediator;
+        private readonly IMediator _mediator;
 
-        public ProductController(Mediator mediator)
+        public ProductController(IMediator mediator)
         {
             _mediator = mediator;
         }

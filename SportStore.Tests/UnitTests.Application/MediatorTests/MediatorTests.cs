@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SportStore.Application;
 using SportStore.Application.Products.Queries;
+using System.Threading.Tasks;
 
-namespace SportStore.Tests.UnitTests.Application
+namespace SportStore.Tests.UnitTests.Application.MediatorTests
 {
     [TestFixture]
     class MediatorTests : TestBase
     {
-      
+
+        [TearDown]
+        public void TearDown()
+        {
+            ResetMediatorBindinds();
+        }
 
         [Test]
         public async Task MediatorWorks()
@@ -42,7 +42,8 @@ namespace SportStore.Tests.UnitTests.Application
 
         [Test]
         public void RegisterFromAssembly_Registers()
-        {//bad test. create test data in test assembly
+        {
+            //bad test. create test data in test assembly
             Mediator.RegisterFromAssembly(typeof(Mediator).Assembly);
             var query = new GetProductPageQuery(1, 4);
 

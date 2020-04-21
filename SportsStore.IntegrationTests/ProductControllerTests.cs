@@ -31,20 +31,9 @@ namespace SportsStore.IntegrationTests
 
             var response = await webApp.GetAsync($"/product/productlist");
 
-            GetResponseContent<ViewResult>(response);
-            
-
-            
+            Assert.IsTrue(response.IsSuccessStatusCode);                  
         }
 
-        public static async Task<T> GetResponseContent<T>(HttpResponseMessage response)
-        {
-            var stringResponse = await response.Content.ReadAsStringAsync();
-
-            var result = JsonConvert.DeserializeObject<T>(stringResponse);
-
-            return result;
-        }
 
 
     }

@@ -1,10 +1,7 @@
 ﻿using SportStore.Application;
-using SportStore.Application.Interfaces;
 using SportStore.Application.Products;
 using SportStore.Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SportStore.UnitTests.UnitTests.Application.MediatorTests;
 
 namespace SportStore.Tests.UnitTests.Application
 {
@@ -17,12 +14,12 @@ namespace SportStore.Tests.UnitTests.Application
         public TestBase()
         {
             context = DbContextFactory.Create();
-            mediator = new Mediator(context, mapper);
+            mediator = new MockMetiator(context, mapper);
         }
 
         public void ResetMediatorBindinds()
         {
-            
+            (mediator as MockMetiator).ClearHandlers();
         }
 
         public void Dispose()

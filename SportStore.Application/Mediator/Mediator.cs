@@ -10,11 +10,19 @@ using System.Linq;
 
 namespace SportStore.Application
 {
-    public class Mediator
+    // I can make handlers non static
+    // registration will become time-consuming, i can register requested types on the fly
+    // and saving them in handlers for later use
+
+    // handler parameters must be injected to make madiator reusable
+    // or make mediator abstract and and overload MakeHandler
+    
+    public class Mediator : IMediator
     {
-        private static readonly Dictionary<Type, Type> Handlers = new Dictionary<Type, Type>(); //concurrent?
         private readonly IApplicationContext _context;
         private readonly IMapper _mapper;
+
+        protected static Dictionary<Type, Type> Handlers { get; set; } = new Dictionary<Type, Type>();
 
         public Mediator(IApplicationContext context, IMapper mapper)
         {
@@ -37,9 +45,9 @@ namespace SportStore.Application
             {
                 handlerType = Handlers[request.GetType()];
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
-                throw new HandlerNotFoundException($"Handler for type {request.GetType()} not found", e);
+                throw new HandlerNotFoundException($"Handler for type {request.GetType()} not found");
             }
 
             var handler = Activator.CreateInstance(handlerType, _context, _mapper);
@@ -48,23 +56,27 @@ namespace SportStore.Application
 
         public static void Register<TRequest, THandler>()
         {
-            Handlers.Add(typeof(TRequest), typeof(THandler));
+            Register(typeof(TRequest), typeof(THandler));
         }
-
+        private static void Register(Type requestType, Type handlerType)
+        {
+            Handlers.Add(requestType, handlerType);
+        }
         public static void RegisterFromAssembly(Assembly assembly)
-        {            
+        {
             var requestTypes = GetRequestTypesFromAssembly(assembly);
             foreach (var requestType in requestTypes)
             {
-                Type handlerType = GetHandler(assembly, requestType);
-                Handlers.Add(requestType, handlerType);                
+                Type handlerType = GetHandlerType(assembly, requestType);
+                Register(requestType, handlerType);
             }
         }
 
-        private static Type GetHandler(Assembly assembly, Type requestType)
+        private static Type GetHandlerType(Assembly assembly, Type requestType)
         {
             return assembly.GetTypes().Where(t =>
-                    t.GetInterfaces().Any(i => i.IsGenericType
+                    t.GetInterfaces().Any(i => 
+                           i.IsGenericType
                         && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>)
                         && i.GetGenericArguments().Contains(requestType)
                         )).Single();

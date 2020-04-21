@@ -33,15 +33,15 @@ namespace SportStore.Tests.UnitTests.Application.ProductTests
 
             int pageNumber = 1;
             var query = new GetProductPageQuery(pageNumber, pageSize);
-            var firstPage= await mediator.Handle(query);
+            var firstPage= await new GetProductPageQueryHandler(context, mapper).Handle(query);
 
             pageNumber = 0;
             query = new GetProductPageQuery(pageNumber, pageSize);
-            var zeroPage = await mediator.Handle(query);
+            var zeroPage = await new GetProductPageQueryHandler(context, mapper).Handle(query);
 
             pageNumber = -1;
             query = new GetProductPageQuery(pageNumber, pageSize);
-            var negativePage = await mediator.Handle(query);
+            var negativePage = await new GetProductPageQueryHandler(context, mapper).Handle(query);
 
             CollectionAssert.AreEqual(firstPage.Products, zeroPage.Products, new ProductDTOByIdComparer());
             CollectionAssert.AreEqual(firstPage.Products, negativePage.Products, new ProductDTOByIdComparer());

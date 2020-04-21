@@ -6,8 +6,8 @@ namespace SportStore.Application
 {
     public class HandlerNotFoundException : Exception
     {
-        public HandlerNotFoundException(string message, Exception innerException) 
-            : base(message, innerException)
+        public HandlerNotFoundException(string message) 
+            : base(message)
         {
         }
     }
