@@ -40,6 +40,14 @@ namespace SportStore.Tests.UnitTests.Application
                 CategoryId = 1,
                 Category = new Category { Name = "Category 1", Description = "Test Categoty 1" }
             }));
+            context.Products.AddRange(Enumerable.Range(0, 10).Select(i => new Product
+            {
+                Name = $"Product {i}",
+                Description = $"Test Product {i}",
+                Price = 1000.0M,
+                CategoryId = 1,
+                Category = new Category { Name = "Category 2", Description = "Test Categoty 2" }
+            }));
 
             context.SaveChanges();
         }

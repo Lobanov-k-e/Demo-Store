@@ -14,10 +14,10 @@ namespace SportStore.WebUi.Controllers
             _mediator = mediator;
         }
 
-        public async Task<ActionResult> ProductList(int pageNumber = 1)
+        public async Task<ActionResult> ProductList(string currentCategory, int pageNumber = 1)
         {
             int pageSize = 3;
-            var result = await _mediator.Handle(new GetProductPageQuery(pageNumber, pageSize));
+            var result = await _mediator.Handle(new GetProductPageQuery(pageNumber, pageSize, currentCategory));
             return View(result);
         }
     }

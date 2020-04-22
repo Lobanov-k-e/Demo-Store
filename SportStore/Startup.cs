@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SportStore.Application;
 using SportStore.Infrastructure;
+using System;
 
 namespace SportStore
 {
@@ -23,9 +24,12 @@ namespace SportStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();           
+            var builder = services.AddControllersWithViews();           
             services.AddApplication();
             services.AddInfrastructure(_configuration);
+#if DEBUG           
+                builder.AddRazorRuntimeCompilation();            
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +47,23 @@ namespace SportStore
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default","{controller=Product}/{action=ProductList}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: null,
+                    pattern: "{currentCategory}/Page{pageNumber:int}",
+                    defaults: new { Controller = "Product", Action = "ProductList" });
+                endpoints.MapControllerRoute(
+                    name: null,
+                    pattern: "/Page{pageNumber:int}",
+                    defaults: new { Controller = "Product", Action = "ProductList", pageNumber = 1});
+                endpoints.MapControllerRoute(
+                   name: null,
+                   pattern: "{currentCategory}",
+                   defaults: new { Controller = "Product", Action = "ProductList", pageNumber = 1 });
+                endpoints.MapControllerRoute(
+                   name: null,
+                   pattern: "",
+                   defaults: new { Controller = "Product", Action = "ProductList", pageNumber = 1 });
+                endpoints.MapControllerRoute("default", "{controller=Product}/{action=ProductList}/{id?}");                          
             });
         }
     }

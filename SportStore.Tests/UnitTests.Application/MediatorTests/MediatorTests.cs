@@ -22,7 +22,7 @@ namespace SportStore.Tests.UnitTests.Application.MediatorTests
             var mediator = new Mediator(context, mapper);
             Mediator.Register<GetProductPageQuery, GetProductPageQueryHandler>();
 
-            var query = new GetProductPageQuery(1, 4);
+            var query = queryFactory.GetProductPageQuery(1, 4);
 
             var result = await mediator.Handle(query);
             var expected = await new GetProductPageQueryHandler(context, mapper).Handle(query);
@@ -35,7 +35,7 @@ namespace SportStore.Tests.UnitTests.Application.MediatorTests
         {
             var mediator = new Mediator(context, mapper);
             
-            var query = new GetProductPageQuery(1, 4);            
+            var query = queryFactory.GetProductPageQuery(1, 4);            
 
             Assert.ThrowsAsync<HandlerNotFoundException>(async() => await mediator.Handle(query));     
         }
@@ -45,7 +45,7 @@ namespace SportStore.Tests.UnitTests.Application.MediatorTests
         {
             //bad test. create test data in test assembly
             Mediator.RegisterFromAssembly(typeof(Mediator).Assembly);
-            var query = new GetProductPageQuery(1, 4);
+            var query = queryFactory.GetProductPageQuery(1, 4);
 
             Assert.DoesNotThrowAsync(async () => await mediator.Handle(query));
         }

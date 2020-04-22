@@ -3,28 +3,10 @@
 @{
     ViewData["Title"] = "ProductList";
 }
-<table class="table">
-    <tbody>
-@foreach (var item in Model.Products) {
-        <tr>
-            <td>
-               @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>           
-        </tr>
+@foreach (var product in Model.Products)
+{
+   @await Html.PartialAsync("ProductCard", product);
 }
-    </tbody>
-</table>
 
-<div page-info="@Model.PageInfo" page-action ="ProductList"></div>
+<div page-info="@Model.PageInfo" page-action ="ProductList" page-classes-enabled ="true" page-class="btn" page-class-normal ="btn-secondary"
+     page-class-selected ="btn-primary" page-url-currentCategory="@Model.CurrentCategory" class ="btn-group float-right m-1"></div>

@@ -7,6 +7,7 @@ namespace SportStore.Application.Products.Queries
     {      
         public PageInfo PageInfo { get; set; }
         public IEnumerable<ProductDTO> Products { get; internal set; }
+        public string CurrentCategory { get; set; }
     }
 
     public class PageInfo

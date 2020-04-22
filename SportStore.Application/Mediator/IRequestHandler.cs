@@ -1,7 +1,7 @@
-﻿using SportStore.Application.Interfaces;
+﻿
 using System.Threading.Tasks;
 
-namespace SportStore.Application.Products.Queries
+namespace SportStore.Application.Interfaces
 {
     public interface IRequestHandler<in TRequest, TResult> where TRequest : IRequest<TResult>
     {

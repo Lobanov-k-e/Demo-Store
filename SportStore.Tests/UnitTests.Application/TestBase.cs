@@ -1,6 +1,8 @@
 ﻿using SportStore.Application;
+using SportStore.Application.Interfaces;
 using SportStore.Application.Products;
 using SportStore.Infrastructure.Persistence;
+using SportStore.UnitTests.UnitTests.Application;
 using SportStore.UnitTests.UnitTests.Application.MediatorTests;
 
 namespace SportStore.Tests.UnitTests.Application
@@ -10,6 +12,7 @@ namespace SportStore.Tests.UnitTests.Application
         protected ApplicationContext context;
         protected Mediator mediator;
         protected IMapper mapper = new Mapper();
+        protected QueryFactory queryFactory = new QueryFactory();
 
         public TestBase()
         {

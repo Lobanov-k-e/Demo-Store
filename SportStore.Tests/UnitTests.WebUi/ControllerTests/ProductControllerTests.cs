@@ -21,13 +21,15 @@ namespace SportStore.UnitTests.UnitTests.WebUi
                     .Returns(Task.FromResult(new ProductPageVM()));
             var controller = new ProductController(mediatorMock.Object);
 
-            _ = controller.ProductList();
+            _ = controller.ProductList(null);
 
             const int DefaultPageNumber = 1;
             Assert.That(query.PageNumber, Is.EqualTo(DefaultPageNumber));
 
             const int DefautPageSize = 3;
             Assert.That(query.PageSize, Is.EqualTo(DefautPageSize));
+
+            Assert.IsNull(query.CurrentCategory);
         }
 
         [Test]
@@ -41,12 +43,16 @@ namespace SportStore.UnitTests.UnitTests.WebUi
             var controller = new ProductController(mediatorMock.Object);
 
             const int PageNumber = 3;
-            _ = controller.ProductList(PageNumber);    
+            const string CategoryName = "Test";
+            _ = controller.ProductList(CategoryName, PageNumber);    
             
             Assert.That(query.PageNumber, Is.EqualTo(PageNumber));
 
             const int DefautPageSize = 3;
             Assert.That(query.PageSize, Is.EqualTo(DefautPageSize));
+
+            
+            Assert.That(query.CurrentCategory, Is.EqualTo(CategoryName));
         }
     }
 }

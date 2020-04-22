@@ -1,4 +1,5 @@
-﻿using SportStore.Application.Products.Queries;
+﻿using SportStore.Application.Interfaces;
+using SportStore.Application.Products.Queries;
 using SportStore.Domain;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,5 +36,9 @@ namespace SportStore.Application.Products
             };
         }
 
+        public IEnumerable<CategoryDTO> MapCategoriesToDTO(List<Category> categories)
+        {
+            return categories.Select(c => MapCategoryToDTO(c)).ToList();
+        }
     }
 }

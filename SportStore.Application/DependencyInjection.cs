@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SportStore.Application.Interfaces;
 using SportStore.Application.Products;
-using SportStore.Application.Products.Queries;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SportStore.Application
 {
@@ -20,7 +17,7 @@ namespace SportStore.Application
 
         private static void RegisterHandlers()
         {
-            Mediator.Register<GetProductPageQuery, GetProductPageQueryHandler>();
+            Mediator.RegisterFromAssembly(typeof(Mediator).Assembly);
         }
 
     }
