@@ -1,4 +1,4 @@
-﻿@model SportStore.Application.Categories.Queries.CategoryListVM
+﻿@model SportStore.Application.Categories.Queries.CategoryNavVm
 <a class="btn btn-secondary btn-block"
    asp-action="ProductList"
    asp-controller="Product"
@@ -7,8 +7,10 @@
     </a>
 @foreach (var category in Model.Categories)
 {
-    <a class="btn btn-block btn-primary"
+    <a class="btn btn-block 
+       @(Model.CurrentCategoryName == category.Name ? "btn-success":"btn-primary")" 
        asp-action="ProductList"
        asp-controller="Product"
-       asp-route-currentcategory= "@category.Name">@category.Name</a>       
+       asp-route-currentcategory= "@category.Name"
+       asp-route-pageNumber="1">@category.Name</a>       
 }

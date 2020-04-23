@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace SportStore.UnitTests.UnitTests.Application.CategoriesTests
 {
     [TestFixture]
-    class GetAllCategoriesTests : TestBase
+    class GetCategoriesNavTest : TestBase
     {
         [Test]
         public async Task Returns_allCategories()
         {
-            var act = await new GetAllCategoriesQueryHandler(context, mapper).Handle(new GetAllCategoriesQuery());
+            var act = await new GetAllCategoriesQueryHandler(context, mapper).Handle(new GetCategoiesNavQuery());
             var expected = context.Categories.Count();
             Assert.AreEqual(act.Categories.Count(), expected);        
         }
@@ -24,7 +24,7 @@ namespace SportStore.UnitTests.UnitTests.Application.CategoriesTests
         [Test]
         public async Task Returns_CorrectCategories()
         {
-            var act = await new GetAllCategoriesQueryHandler(context, mapper).Handle(new GetAllCategoriesQuery());
+            var act = await new GetAllCategoriesQueryHandler(context, mapper).Handle(new GetCategoiesNavQuery());
             var expected = mapper.MapCategoriesToDTO(await context.Categories.ToListAsync());
             CollectionAssert.AreEqual(expected, act.Categories, new CategoryDTOByIdComparer());          
         }

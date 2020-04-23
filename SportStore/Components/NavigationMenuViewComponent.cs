@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportStore.Application;
 using SportStore.Application.Categories.Queries;
+using SportStore.Application.Products.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,9 @@ namespace SportStore.WebUi.Components
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var result = await _mediator.Handle(new GetAllCategoriesQuery());
+            var currentCategory = RouteData?.Values["currentCategory"] as string;
+            var result = await _mediator.Handle(new GetCategoiesNavQuery() { CurrentCategoryName = currentCategory});
+
             return View(result);
         }
     }
