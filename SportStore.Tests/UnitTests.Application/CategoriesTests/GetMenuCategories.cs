@@ -28,5 +28,14 @@ namespace SportStore.UnitTests.UnitTests.Application.CategoriesTests
             var expected = mapper.MapCategoriesToDTO(await context.Categories.ToListAsync());
             CollectionAssert.AreEqual(expected, act.Categories, new CategoryDTOByIdComparer());          
         }
+
+        [Test]
+        public async Task Returns_CorrectCurrentCategory()
+        {
+            var act = await new GetAllCategoriesQueryHandler(context, mapper)
+                .Handle(new GetCategoiesNavQuery() { CurrentCategoryName = "TestName"});
+            
+            CollectionAssert.AreEqual("TestName", act.CurrentCategoryName);
+        }
     }
 }

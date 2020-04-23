@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportStore.Application;
 using SportStore.Application.Products.Queries;
+using SportStore.WebUi.Common;
 using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Controllers
@@ -18,6 +19,7 @@ namespace SportStore.WebUi.Controllers
         {
             int pageSize = 3;
             var result = await _mediator.Handle(new GetProductPageQuery(pageNumber, pageSize, currentCategory));
+            
             return View(result);
         }
     }
