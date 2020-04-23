@@ -16,7 +16,7 @@ namespace SportStore.WebUi.Components
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
-        public async Task<IViewComponentResult> Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var result = await _mediator.Handle(new GetAllCategoriesQuery());
             return View(result);

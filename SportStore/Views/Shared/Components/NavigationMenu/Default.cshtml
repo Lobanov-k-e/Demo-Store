@@ -1,0 +1,14 @@
+﻿@model SportStore.Application.Categories.Queries.CategoryListVM
+<a class="btn btn-secondary btn-block"
+   asp-action="ProductList"
+   asp-controller="Product"
+   asp-route-currentcategory="">
+    Home
+    </a>
+@foreach (var category in Model.Categories)
+{
+    <a class="btn btn-block btn-primary"
+       asp-action="ProductList"
+       asp-controller="Product"
+       asp-route-currentcategory= "@category.Name">@category.Name</a>       
+}

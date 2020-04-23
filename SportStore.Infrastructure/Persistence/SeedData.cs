@@ -2,6 +2,7 @@
 using SportStore.Domain;
 using SportStore.Infrastructure.Persistence;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,10 @@ namespace SportStore.Infrastructure
 
             if (!context.Products.Any())  
             {
+                List<Category> categories = 
+                    Enumerable
+                    .Range(0, 2)
+                    .Select(i => new Category { Name = $"Category {(i / 10) + 1}", Description = $"Test Categoty {(i / 10) + 1}" }).ToList();
                
                 context.Products.AddRange(Enumerable.Range(0, 30).Select((i) => new Product
                 {                    
@@ -23,7 +28,7 @@ namespace SportStore.Infrastructure
                     Description = $"Test Product {i}",
                     Price = 1000.0M,
                     CategoryId = (i / 10) + 1,
-                    Category = new Category { Name = $"Category {(i / 10) + 1}", Description = $"Test Categoty {(i / 10) + 1}" }
+                    Category = categories[i/10]
                 })); 
                 await context.SaveChangesAsync();
             }
