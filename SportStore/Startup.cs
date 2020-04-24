@@ -27,6 +27,8 @@ namespace SportStore
             var builder = services.AddControllersWithViews();           
             services.AddApplication();
             services.AddInfrastructure(_configuration);
+            services.AddMemoryCache();
+            services.AddSession();
 #if DEBUG           
                 builder.AddRazorRuntimeCompilation();            
 #endif
@@ -43,6 +45,7 @@ namespace SportStore
             app.UseRouting();
             app.UseStaticFiles();
             app.UseStatusCodePages();
+            app.UseSession();
             
 
             app.UseEndpoints(endpoints =>

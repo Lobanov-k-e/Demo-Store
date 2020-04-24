@@ -15,6 +15,7 @@ namespace SportStore.Application.Products
 
         public ProductDTO MapProductToDTO(Product product)
         {
+
             return new ProductDTO
             {
                 Id = product.Id,
@@ -30,9 +31,9 @@ namespace SportStore.Application.Products
         {
             return new CategoryDTO()
             {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description
+                Id = category?.Id ?? 0,
+                Name = category?.Name,
+                Description = category?.Description
             };
         }
 
