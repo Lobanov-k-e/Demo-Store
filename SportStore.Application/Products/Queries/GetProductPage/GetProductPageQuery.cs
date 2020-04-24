@@ -21,15 +21,13 @@ namespace SportStore.Application.Products.Queries
         public string CurrentCategory { get;}
     }
 
-    public class GetProductPageQueryHandler : IRequestHandler<GetProductPageQuery, ProductPageVM>
+    public class GetProductPageQueryHandler : RequestHandlerBase, IRequestHandler<GetProductPageQuery, ProductPageVM>
     {
-        private readonly IApplicationContext _context;
-        private readonly IMapper _mapper;
+      
 
-        public GetProductPageQueryHandler(IApplicationContext context, IMapper mapper)
+        public GetProductPageQueryHandler(IApplicationContext context, IMapper mapper) 
+            : base(context, mapper)                 
         {
-            _context = context ?? throw new ArgumentNullException(paramName: nameof(context));
-            _mapper = mapper ?? throw new ArgumentNullException(paramName: nameof(mapper));
         }
 
         public async Task<ProductPageVM> Handle(GetProductPageQuery request)
@@ -37,7 +35,7 @@ namespace SportStore.Application.Products.Queries
 
             int offset = GetOffset(request);
 
-            var products = await _context.Products
+            var products = await Context.Products
                 .Include(p => p.Category)
                 .Where(ByCategoryNameFilter(request))
                 .OrderBy(p => p.Id)
@@ -45,12 +43,12 @@ namespace SportStore.Application.Products.Queries
                 .Take(request.PageSize)
                 .ToListAsync();
 
-            int productsCount = await _context.Products
+            int productsCount = await Context.Products
                 .CountAsync(ByCategoryNameFilter(request));
 
             var Vm = new ProductPageVM()
             {
-                Products = _mapper.MapProductsToDTO(products),
+                Products = Mapper.MapProductsToDTO(products),
                 CurrentCategory = request.CurrentCategory,
                 PageInfo = new PageInfo()
                 {
