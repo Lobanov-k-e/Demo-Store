@@ -7,6 +7,7 @@
         <th>Quantity</th>
         <th class="text-right">Price</th>
         <th  class=" text-right">Subtotal</th>
+        <th>Remove from cart</th>
     </thead>
     <tbody>
         @foreach (var line in Model.Lines)
@@ -16,13 +17,20 @@
                 <td>@line.Quantity</td>
                 <td>@line.Product.Price.ToString("c")</td>
                 <td>@line.LinePrice.ToString("c")</td>
+                <td>
+                    <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
+                        <input type="hidden" value="@line.Product.Id" name="ProductId" />
+                        <input type="hidden" value = "@Context.Request.GetPathAndQuery()" name="ReturnUrl" />
+                        <button type ="submit" class="btn btn-sm btn-danger"> Remove</button>
+                    </form>
+                </td>
             </tr>
         }
         </tbody>
     <tfoot>
         <tr>
             <td colspan="3" class="text-right">Total:</td>
-            <td>@Model.CartTotal.ToString("c")</td>
+            <td colspan="2" class="text-left">@Model.CartTotal.ToString("c")</td>
         </tr>
     </tfoot>
 </table>

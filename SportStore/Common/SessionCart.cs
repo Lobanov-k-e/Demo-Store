@@ -47,7 +47,7 @@ namespace SportStore.WebUi.Common
         public void Clear()
         {
             _cart.Clear();
-            SaveChanges();
+            _session.Remove(SerializationName);
         }
 
         public IEnumerable<CartLine> GetLines() => _cart.Lines;       
@@ -55,7 +55,7 @@ namespace SportStore.WebUi.Common
         public void RemoveItem(ProductDTO product)
         {
             _cart.RemoveItem(product);
-            _session.Remove(SerializationName);
+            SaveChanges();
         }
         public decimal TotalSumm() => _cart.TotalSumm();
        
