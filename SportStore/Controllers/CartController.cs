@@ -13,44 +13,29 @@ namespace SportStore.WebUi.Controllers
     public class CartController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly ICart _cart;
 
-       
-
-        public CartController(IMediator mediator)
+        public CartController(IMediator mediator, ICart cart)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _cart = cart ?? throw new ArgumentNullException(nameof(cart));
         }
         [HttpPost]
         public async Task<IActionResult> AddToCart(CartProductVm model)
         {
-            var product = await _mediator.Handle(new GetProductByIdQuery() { ProductId = model.ProductId });
-            var cart = GetCart();
-            cart.AddItem(product, 1);
-            SaveCart(cart);
+            var product = await _mediator.Handle(new GetProductByIdQuery() { ProductId = model.ProductId });            
+            _cart.AddItem(product, 1);            
             return Redirect(model.ReturnUrl);
         }
         public IActionResult ShowCart(string returnUrl)
-        {
-            var cart = GetCart();
-            return View(new CartViewModel(cart, returnUrl));
+        {            
+            return View(new CartViewModel(_cart, returnUrl));
         }
         public async Task<IActionResult> RemoveFromCart(CartProductVm model)
         {
-            var product = await _mediator.Handle(new GetProductByIdQuery() { ProductId = model.ProductId });
-            var cart = GetCart();
-            cart.RemoveItem(product);
-            SaveCart(cart);
+            var product = await _mediator.Handle(new GetProductByIdQuery() { ProductId = model.ProductId });            
+            _cart.RemoveItem(product);            
             return Redirect(model.ReturnUrl);
-        }
-
-        private void SaveCart(Cart cart)
-        {
-            HttpContext.Session.SetJson("Cart", cart);
-        }
-
-        private Cart GetCart()
-        {            
-            return HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
         }
     }
 }

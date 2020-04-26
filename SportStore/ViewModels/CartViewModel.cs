@@ -14,7 +14,7 @@ namespace SportStore.WebUi.ViewModels
 
         public decimal CartTotal { get;}
 
-        public CartViewModel(Cart cart, string returnUrl)
+        public CartViewModel(ICart cart, string returnUrl)
         {
             _ = cart ?? throw new ArgumentNullException(paramName: nameof(cart));
 
