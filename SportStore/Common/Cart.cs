@@ -1,18 +1,29 @@
-﻿using SportStore.Application.Products.Queries;
-using SportStore.Domain;
+﻿using Newtonsoft.Json;
+using SportStore.Application.Products.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Common
 {
+
     public class Cart
     {
-        private readonly LineCollection cartLines;
+        private readonly LineCollection cartLines;      
+
         public Cart()
         {
             cartLines = new LineCollection();
+        }
+
+        [JsonConstructor]
+        public Cart(IEnumerable<CartLine> lines)
+        {
+            cartLines = new LineCollection();
+            foreach (var line in lines)
+            {
+                cartLines.AddLine(line);
+            }
         }
 
         public void AddItem(ProductDTO product, int quantity)
@@ -44,6 +55,11 @@ namespace SportStore.WebUi.Common
         public IEnumerable<CartLine> GetLines()
         {
             return cartLines.Items;
+        }        
+        public IEnumerable<CartLine> Lines
+        {
+            get { return GetLines(); }
+            
         }
 
        
@@ -55,8 +71,8 @@ namespace SportStore.WebUi.Common
             internal void RemoveProduct(ProductDTO product) => cartLines.RemoveAll(l => l.Product.Id == product.Id);
             internal CartLine FindLine(ProductDTO product) => cartLines.Where(l => l.Product.Id == product.Id).SingleOrDefault();
             internal decimal CalculateTotal() => cartLines.Sum(l => l.Product.Price * l.Quantity);
-            internal void Clear() => cartLines.Clear();
-            internal IEnumerable<CartLine> Items { 
+            internal void Clear() => cartLines.Clear();         
+            public IEnumerable<CartLine> Items { 
                 get
                 {
                     List<CartLine> result= new List<CartLine>(cartLines.Count());
@@ -75,6 +91,13 @@ namespace SportStore.WebUi.Common
         public int CartLineId { get; set; }
         public ProductDTO Product { get; set; }
         public int Quantity { get; set; }
+
+        public decimal LinePrice { 
+            get
+            {
+                return Product.Price * Quantity;
+            } 
+        }
 
         public CartLine Copy()
         {

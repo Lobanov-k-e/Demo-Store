@@ -23,7 +23,7 @@ namespace SportStore.Application.Products
                 Description = product.Description,
                 Price = product.Price,
                 CategoryId = product.CategoryId,
-                Category = MapCategoryToDTO(product.Category)
+                Category = product.Category is null ? null : MapCategoryToDTO(product.Category)
             };
         }
 
@@ -31,9 +31,9 @@ namespace SportStore.Application.Products
         {
             return new CategoryDTO()
             {
-                Id = category?.Id ?? 0,
-                Name = category?.Name,
-                Description = category?.Description
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description
             };
         }
 

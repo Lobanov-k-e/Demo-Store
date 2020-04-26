@@ -33,7 +33,7 @@ namespace SportsStore.IntegrationTests
 
             Assert.IsTrue(response.IsSuccessStatusCode);                  
         }
-
+       
 
 
     }
