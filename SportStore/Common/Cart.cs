@@ -7,9 +7,9 @@ using System.Linq;
 namespace SportStore.WebUi.Common
 {
 
-    public class Cart
+    public class Cart : ICart
     {
-        private readonly LineCollection cartLines;      
+        private readonly LineCollection cartLines;
 
         public Cart()
         {
@@ -55,36 +55,38 @@ namespace SportStore.WebUi.Common
         public IEnumerable<CartLine> GetLines()
         {
             return cartLines.Items;
-        }        
+        }
         public IEnumerable<CartLine> Lines
         {
             get { return GetLines(); }
-            
+
         }
 
-       
 
-        private class LineCollection 
+
+        private class LineCollection
         {
             private readonly List<CartLine> cartLines = new List<CartLine>();
             internal void AddLine(CartLine line) => cartLines.Add(line);
             internal void RemoveProduct(ProductDTO product) => cartLines.RemoveAll(l => l.Product.Id == product.Id);
             internal CartLine FindLine(ProductDTO product) => cartLines.Where(l => l.Product.Id == product.Id).SingleOrDefault();
             internal decimal CalculateTotal() => cartLines.Sum(l => l.Product.Price * l.Quantity);
-            internal void Clear() => cartLines.Clear();         
-            public IEnumerable<CartLine> Items { 
+            internal void Clear() => cartLines.Clear();
+            public IEnumerable<CartLine> Items
+            {
                 get
                 {
-                    List<CartLine> result= new List<CartLine>(cartLines.Count());
-                    result.AddRange(cartLines.Select(l=>l.Copy()));
+                    List<CartLine> result = new List<CartLine>(cartLines.Count());
+                    result.AddRange(cartLines.Select(l => l.Copy()));
                     return result;
-                }}
+                }
+            }
         }
     }
 
 
 
-   
+
 
     public class CartLine
     {

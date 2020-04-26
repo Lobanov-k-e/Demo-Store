@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SportStore.Application;
 using SportStore.Infrastructure;
-using System;
+using SportStore.WebUi;
 
 namespace SportStore
 {
@@ -27,6 +27,7 @@ namespace SportStore
             var builder = services.AddControllersWithViews();           
             services.AddApplication();
             services.AddInfrastructure(_configuration);
+            services.AddWebUi();
             services.AddMemoryCache();
             services.AddSession();
 #if DEBUG           

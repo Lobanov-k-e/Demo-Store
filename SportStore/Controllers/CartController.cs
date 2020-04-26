@@ -14,11 +14,7 @@ namespace SportStore.WebUi.Controllers
     {
         private readonly IMediator _mediator;
 
-        public IActionResult ShowCart(string returnUrl)
-        {
-            var cart = GetCart();
-            return View(new CartViewModel(cart, returnUrl));
-        }
+       
 
         public CartController(IMediator mediator)
         {
@@ -33,8 +29,11 @@ namespace SportStore.WebUi.Controllers
             SaveCart(cart);
             return Redirect(model.ReturnUrl);
         }
-
-
+        public IActionResult ShowCart(string returnUrl)
+        {
+            var cart = GetCart();
+            return View(new CartViewModel(cart, returnUrl));
+        }
         public async Task<IActionResult> RemoveFromCart(CartProductVm model)
         {
             var product = await _mediator.Handle(new GetProductByIdQuery() { ProductId = model.ProductId });
