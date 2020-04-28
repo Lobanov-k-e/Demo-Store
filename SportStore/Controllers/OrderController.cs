@@ -44,7 +44,7 @@ namespace SportStore.WebUi.Controllers
            
         }
 
-        private IActionResult Completed()
+        public IActionResult Completed()
         {
             _cart.Clear();
             return View();
