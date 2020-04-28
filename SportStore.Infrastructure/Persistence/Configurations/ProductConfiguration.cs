@@ -12,6 +12,7 @@ namespace SportStore.Infrastructure.Persistence.Configurations
             builder.Property(e => e.Name).IsRequired().HasMaxLength(50);
             builder.Property(e => e.Price).HasColumnType("money").HasDefaultValueSql("((0))");
             builder.HasOne(e => e.Category).WithMany(c => c.Products);
+            
         }
     }
 }

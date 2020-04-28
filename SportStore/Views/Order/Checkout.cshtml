@@ -1,0 +1,22 @@
+﻿@model SportStore.Application.Orders.OrderVm
+
+    <form asp-action="Checkout" method="post">
+        <h3>Ship to</h3>
+        <div class="form-group">
+            <label>Name</label><input asp-for="Customer.Name" class="form-control" />
+        </div>
+        <h3>Adress</h3>
+        <div class="form-group">
+            <label>Line 1</label><input asp-for="Customer.Adress.Line1" class="form-control" />
+            <label>Line 2</label><input asp-for="Customer.Adress.Line2" class="form-control" />
+            <label>Line 3</label><input asp-for="Customer.Adress.Line3" class="form-control" />
+            <label>Country</label><input asp-for="Customer.Adress.Country" class="form-control" />
+            <label>State</label><input asp-for="Customer.Adress.State" class="form-control" />
+            <label>City</label><input asp-for="Customer.Adress.City" class="form-control" />
+            <label>Zip</label><input asp-for="Customer.Adress.Zip" class="form-control" />
+        </div>
+        <div class="checkbox">
+        <label> <input asp-for="GiftWrap" />Gift wrap this item</label> 
+            </div>
+        <div class="text-center"> <input class="btn btn-primary" type="submit" value="Complete Order" /> </div>
+    </form>

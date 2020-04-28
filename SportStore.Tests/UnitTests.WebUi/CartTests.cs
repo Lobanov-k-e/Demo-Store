@@ -124,7 +124,7 @@ namespace SportStore.UnitTests.UnitTests.WebUi
                 expectedTotal += i;
             }
 
-            Assert.AreEqual(expectedTotal, cart.TotalSumm());            
+            Assert.AreEqual(expectedTotal, cart.CalculateSumm());            
         }
        
 

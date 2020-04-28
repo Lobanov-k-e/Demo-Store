@@ -11,6 +11,7 @@ namespace SportStore.WebUi.Common
         void Clear();
         IEnumerable<CartLine> GetLines();
         void RemoveItem(ProductDTO product);
-        decimal TotalSumm();
+        decimal CalculateSumm();
+        int TotalItems { get;}
     }
 }

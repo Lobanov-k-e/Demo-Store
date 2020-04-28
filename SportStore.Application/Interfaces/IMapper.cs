@@ -1,4 +1,5 @@
-﻿using SportStore.Application.Products.Queries;
+﻿using SportStore.Application.Orders;
+using SportStore.Application.Products.Queries;
 using SportStore.Domain;
 using System.Collections.Generic;
 
@@ -10,5 +11,8 @@ namespace SportStore.Application.Interfaces
         CategoryDTO MapCategoryToDTO(Category category);
         IEnumerable<ProductDTO> MapProductsToDTO(List<Product> products);
         ProductDTO MapProductToDTO(Product product);
+        Order MapOrderVmToDomain(OrderVm order);
+        OrderVm MapOrderToVm(Order order);
+        Product MapProductToDomain(ProductDTO product);
     }
 }

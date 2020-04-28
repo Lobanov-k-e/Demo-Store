@@ -19,7 +19,8 @@ namespace SportStore.WebUi.ViewModels
             _ = cart ?? throw new ArgumentNullException(paramName: nameof(cart));
 
             Lines = cart.GetLines();
-            CartTotal = cart.TotalSumm();
+            CartTotal = cart.CalculateSumm();
+            ReturnUrl = returnUrl;
         }
     }
 }

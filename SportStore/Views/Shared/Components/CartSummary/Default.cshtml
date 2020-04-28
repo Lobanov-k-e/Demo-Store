@@ -1,0 +1,19 @@
+﻿@model (int, decimal)
+
+    <div id="cart-summary" class="">
+        @{string cartCss = "btn-secondary";}
+        @if (Model.Item1 > 0)
+        {
+            cartCss = "btn-outline-success";
+            <small class="navbar-text p-0">
+                <b>Your cart:</b>
+                @Model.Item1 item(s) for @Model.Item2.ToString("c")
+            </small>
+        }
+        <a class="btn btn-sm @cartCss" asp-controller="Cart"
+           asp-action="ShowCart"
+           asp-route-returnurl="@Context.Request.GetPathAndQuery()">
+            <i class="fa fa-shopping-cart"></i>
+        </a>
+    </div>
+    

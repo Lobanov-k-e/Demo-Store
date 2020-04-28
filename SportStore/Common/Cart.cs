@@ -25,6 +25,9 @@ namespace SportStore.WebUi.Common
                 cartLines.AddLine(line);
             }
         }
+        public int TotalItems => cartLines.GetTotalItems();
+        public IEnumerable<CartLine> Lines => GetLines();
+
 
         public void AddItem(ProductDTO product, int quantity)
         {
@@ -48,22 +51,15 @@ namespace SportStore.WebUi.Common
             cartLines.RemoveProduct(product);
         }
 
-        public decimal TotalSumm() => cartLines.CalculateTotal();
+        public decimal CalculateSumm() => cartLines.CalculateTotal();
 
         public void Clear() => cartLines.Clear();
 
         public IEnumerable<CartLine> GetLines()
         {
             return cartLines.Items;
-        }
-        public IEnumerable<CartLine> Lines
-        {
-            get { return GetLines(); }
-
-        }
-
-
-
+        }      
+        
         private class LineCollection
         {
             private readonly List<CartLine> cartLines = new List<CartLine>();
@@ -71,6 +67,7 @@ namespace SportStore.WebUi.Common
             internal void RemoveProduct(ProductDTO product) => cartLines.RemoveAll(l => l.Product.Id == product.Id);
             internal CartLine FindLine(ProductDTO product) => cartLines.Where(l => l.Product.Id == product.Id).SingleOrDefault();
             internal decimal CalculateTotal() => cartLines.Sum(l => l.Product.Price * l.Quantity);
+            internal int GetTotalItems() => cartLines.Sum(l => l.Quantity);
             internal void Clear() => cartLines.Clear();
             public IEnumerable<CartLine> Items
             {

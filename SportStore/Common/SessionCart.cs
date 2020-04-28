@@ -37,7 +37,8 @@ namespace SportStore.WebUi.Common
 
         public IEnumerable<CartLine> Lines => _cart.Lines;
 
-       
+        public int TotalItems => _cart.TotalItems;
+
         public void AddItem(ProductDTO product, int quantity)
         {
             _cart.AddItem(product, quantity);
@@ -57,7 +58,7 @@ namespace SportStore.WebUi.Common
             _cart.RemoveItem(product);
             SaveChanges();
         }
-        public decimal TotalSumm() => _cart.TotalSumm();
+        public decimal CalculateSumm() => _cart.CalculateSumm();
        
     }
 }

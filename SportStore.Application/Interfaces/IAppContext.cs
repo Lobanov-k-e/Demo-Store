@@ -12,6 +12,7 @@ namespace SportStore.Application.Interfaces
     {
         DbSet<Product> Products { get; set; }
         DbSet<Category> Categories { get; set; }
+        DbSet<Order> Orders { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

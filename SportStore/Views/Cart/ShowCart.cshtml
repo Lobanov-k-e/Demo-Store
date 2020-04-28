@@ -19,8 +19,7 @@
                 <td>@line.LinePrice.ToString("c")</td>
                 <td>
                     <form asp-action="RemoveFromCart" asp-controller="Cart" method="post">
-                        <input type="hidden" value="@line.Product.Id" name="ProductId" />
-                        <input type="hidden" value = "@Context.Request.GetPathAndQuery()" name="ReturnUrl" />
+                        <input type="hidden" value="@line.Product.Id" name="ProductId" />                       
                         <button type ="submit" class="btn btn-sm btn-danger"> Remove</button>
                     </form>
                 </td>
@@ -35,5 +34,6 @@
     </tfoot>
 </table>
 <div class="text-center"><a class="btn btn-primary" href ="@Model.ReturnUrl">Continue shopping</a></div>
+<div class="text-center"><a class="btn btn-primary" asp-action="Checkout" asp-controller="Order">Checkout</a></div>
 
 

@@ -15,6 +15,7 @@ namespace SportStore.Infrastructure.Persistence
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set;}
+        public DbSet<Order> Orders { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {          
@@ -24,7 +25,7 @@ namespace SportStore.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);            
         }
     }
 }

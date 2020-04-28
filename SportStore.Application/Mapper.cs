@@ -1,6 +1,8 @@
 ﻿using SportStore.Application.Interfaces;
+using SportStore.Application.Orders;
 using SportStore.Application.Products.Queries;
 using SportStore.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -40,6 +42,107 @@ namespace SportStore.Application.Products
         public IEnumerable<CategoryDTO> MapCategoriesToDTO(List<Category> categories)
         {
             return categories.Select(c => MapCategoryToDTO(c)).ToList();
+        }
+
+        public OrderVm MapOrderToVm(Order order)
+        {           
+            return new OrderVm
+            {
+                OrderId = order.Id,
+                OrderLines = MapLines(order.OrderLines),
+                Customer = CreateCustomerVm(order),
+                GiftWrap = order.GiftWrap
+            };
+        }
+
+        private CustomerVM CreateCustomerVm(Order order)
+        {
+            return new CustomerVM
+            {
+                Name = order.Name,
+                Adress = MapAdressToVM(order.CustomerAdress)
+            };
+        }
+
+        private AdressVm MapAdressToVM(Adress customerAdress)
+        {
+            return new AdressVm
+            {
+                Line1   = customerAdress.Line1,
+                Line2   = customerAdress.Line2,
+                Line3   = customerAdress.Line3,
+                Country = customerAdress.Country,
+                City    = customerAdress.City,
+                State   = customerAdress.State,
+                Zip     = customerAdress.Zip
+            };
+        }
+
+        private ICollection<OrderLineVm> MapLines(ICollection<OrderLine> orderLines)
+        {
+            return orderLines.Select(l => MapLine(l)).ToList();
+        }
+
+        private OrderLineVm MapLine(OrderLine line)
+        {
+            return new OrderLineVm
+            {
+                Product = MapProductToDTO(line.Product),
+                Quantity = line.Quantity
+            };
+        }
+
+        public Order MapOrderVmToDomain(OrderVm orderVm)
+        {
+            var order = new Order()
+            {
+                Id = orderVm.OrderId,
+                OrderLines = MapLineVmToLies(orderVm.OrderLines),
+                Name = orderVm.Customer.Name,
+                CustomerAdress = MapAddressToDomain(orderVm.Customer.Adress),
+                GiftWrap = orderVm.GiftWrap
+            };
+            return order;
+        }
+
+        private Adress MapAddressToDomain(AdressVm vm)
+        {
+            return new Adress
+            {
+                Line1 = vm.Line1,
+                Line2 = vm.Line2,
+                Line3 = vm.Line3,
+                Country = vm.Country,
+                City = vm.City,
+                State = vm.State,
+                Zip = vm.Zip
+            };
+        }
+
+        private ICollection<OrderLine> MapLineVmToLies(IEnumerable<OrderLineVm> orderLines)
+        {
+            return orderLines.Select(l => MapLineToDomain(l)).ToList();
+        }
+
+        private OrderLine MapLineToDomain(OrderLineVm lineVm)
+        {
+            return new OrderLine()
+            {
+                Product = MapProductToDomain(lineVm.Product),
+                Quantity = lineVm.Quantity
+            };
+        }
+
+        public Product MapProductToDomain(ProductDTO dto)
+        {
+            return new Product()
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                CategoryId = dto.Id,
+                Description = dto.Description,
+                Price = dto.Price
+            };
         }
     }
 }

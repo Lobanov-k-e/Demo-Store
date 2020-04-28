@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" asp-href-include="/lib/twitter-bootstrap/css/*.min.css"
                             asp-href-exclude="**/*-reboot*, **/*-grid*" />  
+    <link rel="stylesheet" asp-href-include="/lib/font-awesome/css/*.css" />
     <title>Sport Store</title>
 </head>
 <body>
-    <div class="navbar navbar-dark bg-dark" role="navigation">
+    <div class="navbar navbar-dark bg-dark border" role="navigation">
+        
         <a class="navbar-brand" href="#">Sports Store</a>
-        </div>
+        <div class="text-right">@await Component.InvokeAsync("CartSummary")</div>
+    </div>
     <div class="row m-1 p-1">
         <div id="categories" class="col-3">
             @await Component.InvokeAsync("NavigationMenu")
