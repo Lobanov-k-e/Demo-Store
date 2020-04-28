@@ -19,6 +19,11 @@ namespace SportStore.Tests.UnitTests.Application
             context = DbContextFactory.Create();
             mediator = new MockMetiator(context, mapper);
         }
+        public TestBase(bool asNoTracking)
+        {
+            context = DbContextFactory.Create(asNoTracking);
+            mediator = new MockMetiator(context, mapper);
+        }
 
         public void ResetMediatorBindinds()
         {

@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,7 @@ namespace SportStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = services.AddControllersWithViews();           
+            var builder = services.AddControllersWithViews().AddFluentValidation();            
             services.AddApplication();
             services.AddInfrastructure(_configuration);
             services.AddWebUi();

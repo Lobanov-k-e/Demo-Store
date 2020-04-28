@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using SportStore.Application.Interfaces;
+using SportStore.Application.Orders;
 using SportStore.Application.Products;
 
 namespace SportStore.Application
@@ -11,6 +13,7 @@ namespace SportStore.Application
         {            
             services.AddTransient<IMapper, Mapper>();
             services.AddTransient<IMediator, Mediator>();
+            services.AddTransient<IValidator<OrderVm>, OrderVmValidation>();
             RegisterHandlers();
             return services;
         }

@@ -14,5 +14,12 @@ namespace SportStore.Domain
         public string State { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
+
+        public override string ToString()
+        {
+            return Line1 + Line2 + Line3 + Country + State + City + Zip;
+        }
     }
+
+    
 }
