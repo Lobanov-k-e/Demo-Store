@@ -34,7 +34,7 @@ namespace SportStore.Application.Categories.Commands
             return category.Id;
         }        
     }
-    class AddCategoryValidator : AbstractValidator<AddCategoryCommand>
+    public class AddCategoryValidator : AbstractValidator<AddCategoryCommand>
     {
         public AddCategoryValidator()
         {

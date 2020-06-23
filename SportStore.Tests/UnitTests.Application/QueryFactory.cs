@@ -1,4 +1,5 @@
-﻿using SportStore.Application.Categories.Queries;
+﻿using SportStore.Application.Categories.Commands;
+using SportStore.Application.Categories.Queries;
 using SportStore.Application.Products.Queries;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace SportStore.UnitTests.UnitTests.Application
         {
             return new GetProductPageQuery(pageNumber, pageSize, categoryName);
         }
+      
 
         public GetAllCategories GetAllCategoriesQuery()
         {

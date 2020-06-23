@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SportStore.Application;
 using SportStore.Application.Categories.Commands;
 using SportStore.Application.Categories.Queries;
+using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Controllers
 {
@@ -54,6 +51,23 @@ namespace SportStore.WebUi.Controllers
                 return RedirectToAction(nameof(CategoryList));
             }
             return View(command);
+        }
+
+        public async Task<IActionResult> Delete(int categoryId)
+        {
+            var category = await Mediator.Handle(new GetCategoryById { Id = categoryId });
+            if (category is null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(DeleteCategory command)
+        {
+            await Mediator.Handle(command);
+            return RedirectToAction("CategoryList");
         }
     }
 }
