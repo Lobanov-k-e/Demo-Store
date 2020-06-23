@@ -10,14 +10,13 @@ using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Controllers
 {
-    public class OrderController : Controller
+    public class OrderController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        
         private readonly ICart _cart;
 
-        public OrderController(IMediator mediator, ICart cart)
-        {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        public OrderController(IMediator mediator, ICart cart) : base(mediator)
+        {           
             _cart = cart ?? throw new ArgumentNullException(nameof(cart));
         }
 
@@ -36,7 +35,7 @@ namespace SportStore.WebUi.Controllers
             if (ModelState.IsValid)
             {
                 order.OrderLines = _cart.GetOrderLines();
-                await _mediator.Handle(new CreateNewOrder() { Order = order });
+                await Mediator.Handle(new CreateNewOrder() { Order = order });
                 return RedirectToAction(nameof(Completed));
             }
             else 

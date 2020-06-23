@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Controllers
 {
-    public class ProductController : Controller
-    {
-        private readonly IMediator _mediator;
+    public class ProductController : ControllerBase  
+    {       
 
-        public ProductController(IMediator mediator)
+        public ProductController(IMediator mediator) : base(mediator)
         {
-            _mediator = mediator;
+            
         }
 
         public async Task<ActionResult> ProductList(string currentCategory, int pageNumber = 1)
         {
             int pageSize = 3;
-            var result = await _mediator.Handle(new GetProductPageQuery(pageNumber, pageSize, currentCategory));            
+            var result = await Mediator.Handle(new GetProductPageQuery(pageNumber, pageSize, currentCategory));            
             return View(result);
         }
     }

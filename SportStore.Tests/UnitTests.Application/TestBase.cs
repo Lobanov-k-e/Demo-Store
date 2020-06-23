@@ -30,6 +30,11 @@ namespace SportStore.Tests.UnitTests.Application
             (mediator as MockMetiator).ClearHandlers();
         }
 
+        public void CreateNewContext(bool asNoTracking = false)
+        {
+            context = DbContextFactory.Create(asNoTracking);
+        }
+
         public void Dispose()
         {
             DbContextFactory.Destroy(context);

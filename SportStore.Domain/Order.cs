@@ -11,5 +11,7 @@ namespace SportStore.Domain
         public ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
         public string Name { get; set; }
         public bool GiftWrap { get; set; }
+
+        public bool Shipped { get; set; }
     }
 }

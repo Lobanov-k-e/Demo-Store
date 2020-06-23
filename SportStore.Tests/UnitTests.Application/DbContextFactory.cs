@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
 using SportStore.Domain;
 using SportStore.Infrastructure.Persistence;
 using System;
@@ -8,6 +9,7 @@ namespace SportStore.Tests.UnitTests.Application
 {
     internal class DbContextFactory
     {
+      
         public static ApplicationContext Create(bool asNoTracking = false)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>()

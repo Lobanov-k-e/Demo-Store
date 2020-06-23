@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Controllers
 {
-    public class CartController : Controller
-    {
-        private readonly IMediator _mediator;
+    public class CartController : ControllerBase
+    {        
         private readonly ICart _cart;
 
-        public CartController(IMediator mediator, ICart cart)
-        {
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        public CartController(IMediator mediator, ICart cart) : base(mediator)
+        {           
             _cart = cart ?? throw new ArgumentNullException(nameof(cart));
         }
+
+      
         [HttpPost]
         public async Task<IActionResult> AddToCart(CartProductVm model)
         {
-            var product = await _mediator.Handle(new GetProductByIdQuery() { ProductId = model.ProductId });            
+            var product = await Mediator.Handle(new GetProductByIdQuery() { ProductId = model.ProductId });            
             _cart.AddItem(product, 1);            
             return Redirect(model.ReturnUrl);
         }
@@ -34,7 +34,7 @@ namespace SportStore.WebUi.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveFromCart(int productId)
         {
-            var product = await _mediator.Handle(new GetProductByIdQuery() { ProductId = productId });            
+            var product = await Mediator.Handle(new GetProductByIdQuery() { ProductId = productId });            
             _cart.RemoveItem(product);
             return RedirectToAction("ShowCart");
         }

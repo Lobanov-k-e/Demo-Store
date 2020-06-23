@@ -17,6 +17,14 @@ namespace SportStore.UnitTests.UnitTests.Application.OrderTests
     [TestFixture]
     class CreateNewOrderTests : TestBase
     {
+
+        [SetUp]
+        public void SetUp()
+        {
+            const bool AsNoTracking = true;
+            CreateNewContext(AsNoTracking);
+        }
+
         public CreateNewOrderTests() : base(true)
         {
         }
@@ -48,6 +56,7 @@ namespace SportStore.UnitTests.UnitTests.Application.OrderTests
             Assert.AreEqual(1, result);
             Assert.AreEqual(1, context.Orders.Count());
         }
+       
         [Test]
         public async Task NotCreateProducts()
         {
@@ -111,6 +120,7 @@ namespace SportStore.UnitTests.UnitTests.Application.OrderTests
             Assert.AreEqual(orderVm.OrderLines.Count(), result.OrderLines.Count());
             Assert.AreEqual(9, result.OrderLines.Single(p => p.Id == 1).Quantity);
             Assert.AreEqual(4, result.OrderLines.Single(p => p.Id == 2).Quantity);
+                        
         }
 
         private static AdressVm CreateSampleAdress()

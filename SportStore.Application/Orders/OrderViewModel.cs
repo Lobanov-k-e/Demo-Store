@@ -7,6 +7,7 @@ namespace SportStore.Application.Orders
 {
     public class OrderVm
     {
+        public bool Shipped { get; set; } = false;
         public int OrderId { get; set; }
         public IEnumerable<OrderLineVm> OrderLines { get; set; }
         public CustomerVM Customer { get; set; }

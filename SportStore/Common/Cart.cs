@@ -81,10 +81,6 @@ namespace SportStore.WebUi.Common
         }
     }
 
-
-
-
-
     public class CartLine
     {
         public int CartLineId { get; set; }

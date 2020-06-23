@@ -39,6 +39,16 @@ namespace SportStore.Application.Products
             };
         }
 
+        public Category MapCategoryToDomain(CategoryDTO category)
+        {
+            return new Category
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description
+            };
+        }
+
         public IEnumerable<CategoryDTO> MapCategoriesToDTO(List<Category> categories)
         {
             return categories.Select(c => MapCategoryToDTO(c)).ToList();
@@ -51,7 +61,8 @@ namespace SportStore.Application.Products
                 OrderId = order.Id,
                 OrderLines = MapLines(order.OrderLines),
                 Customer = CreateCustomerVm(order),
-                GiftWrap = order.GiftWrap
+                GiftWrap = order.GiftWrap,
+                Shipped = order.Shipped
             };
         }
 
@@ -100,7 +111,8 @@ namespace SportStore.Application.Products
                 OrderLines = MapLineVmToLies(orderVm.OrderLines),
                 Name = orderVm.Customer.Name,
                 CustomerAdress = MapAddressToDomain(orderVm.Customer.Adress),
-                GiftWrap = orderVm.GiftWrap
+                GiftWrap = orderVm.GiftWrap,
+                Shipped = orderVm.Shipped
             };
             return order;
         }
