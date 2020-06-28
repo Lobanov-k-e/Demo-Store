@@ -13,8 +13,4 @@
     <ProjectReference Include="..\SportStore.Domain\SportStore.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Products\Commands\" />
-  </ItemGroup>
-
 </Project>

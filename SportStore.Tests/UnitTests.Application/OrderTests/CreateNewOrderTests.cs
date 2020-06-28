@@ -50,7 +50,7 @@ namespace SportStore.UnitTests.UnitTests.Application.OrderTests
                 }
             };
 
-            var command = CommandFacory.GetCreateNewOrderCommand(orderVm);
+            var command = CommandFactory.GetCreateNewOrderCommand(orderVm);
             var result = await new CreateNewOrderHandler(context, mapper).Handle(command);
 
             Assert.AreEqual(1, result);
@@ -80,7 +80,7 @@ namespace SportStore.UnitTests.UnitTests.Application.OrderTests
 
             int expectedCount = context.Products.Count();
 
-            var command = CommandFacory.GetCreateNewOrderCommand(orderVm);
+            var command = CommandFactory.GetCreateNewOrderCommand(orderVm);
             await new CreateNewOrderHandler(context, mapper).Handle(command);
 
             Assert.AreEqual(expectedCount, context.Products.Count());
@@ -109,7 +109,7 @@ namespace SportStore.UnitTests.UnitTests.Application.OrderTests
 
             int expectedCount = context.Products.Count();
 
-            var command = CommandFacory.GetCreateNewOrderCommand(orderVm);
+            var command = CommandFactory.GetCreateNewOrderCommand(orderVm);
             var resultId = await new CreateNewOrderHandler(context, mapper).Handle(command);
 
             var result = context.Orders.Include(o => o.OrderLines).Single(o => o.Id == resultId);

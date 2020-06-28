@@ -20,7 +20,7 @@ namespace SportStore.UnitTests.UnitTests.Application.CategoriesTests
         [Test]
         public async Task CanAddCategory()
         {
-            var command = CommandFacory.GetAddCategoryCommand("TestName","TestDescription");
+            var command = CommandFactory.GetAddCategoryCommand("TestName","TestDescription");
 
             int categoryId = await new AddCategoryRequestHandler(context, mapper).Handle(command);
             var category = await context.Categories.FindAsync(categoryId);
@@ -34,14 +34,14 @@ namespace SportStore.UnitTests.UnitTests.Application.CategoriesTests
         public void ShouldHaveErrors_Name_isEmpty()
         {
             var validator = new AddCategoryValidator();
-            var command = CommandFacory.GetAddCategoryCommand("", "TestDescr");
+            var command = CommandFactory.GetAddCategoryCommand("", "TestDescr");
             validator.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
         [Test]
         public void ShouldNotHaveErrors_Name_isSpecified()
         {
             var validator = new AddCategoryValidator();
-            var command = CommandFacory.GetAddCategoryCommand("Name", "TestDescr");
+            var command = CommandFactory.GetAddCategoryCommand("Name", "TestDescr");
             validator.ShouldNotHaveValidationErrorFor(x => x.Name, command);
         }
 
@@ -49,14 +49,14 @@ namespace SportStore.UnitTests.UnitTests.Application.CategoriesTests
         public void ShouldHaveErrors_Description_isEmpty()
         {
             var validator = new AddCategoryValidator();
-            var command = CommandFacory.GetAddCategoryCommand("Name", "");
+            var command = CommandFactory.GetAddCategoryCommand("Name", "");
             validator.ShouldHaveValidationErrorFor(x => x.Description, command);
         }
         [Test]
         public void ShouldNotHaveErrors_Description_isSpecified()
         {
             var validator = new AddCategoryValidator();
-            var command = CommandFacory.GetAddCategoryCommand("Name", "TestDescr");
+            var command = CommandFactory.GetAddCategoryCommand("Name", "TestDescr");
             validator.ShouldNotHaveValidationErrorFor(x => x.Description, command);
         }
     }

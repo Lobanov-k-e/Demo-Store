@@ -19,5 +19,10 @@ namespace SportStore.UnitTests.UnitTests.Application
         {
             return new GetAllCategories();
         }
+
+        internal static GetCategoryById GetCategoryByIdQuery(int id)
+        {
+            return new GetCategoryById() { Id = id };
+        }
     }
 }

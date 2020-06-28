@@ -42,7 +42,7 @@ namespace SportStore.Application.Categories.Commands
         }
     }
 
-    class EditCategoryValidator : AbstractValidator<EditCategory>
+    public class EditCategoryValidator : AbstractValidator<EditCategory>
     {
         public EditCategoryValidator()
         {

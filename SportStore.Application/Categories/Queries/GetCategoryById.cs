@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using SportStore.Application.Interfaces;
 using SportStore.Application.Products.Queries;
 using System;
@@ -23,7 +24,17 @@ namespace SportStore.Application.Categories.Queries
         public async Task<CategoryDTO> Handle(GetCategoryById request)
         {
             var category = await Context.Categories.SingleOrDefaultAsync(c => c.Id == request.Id);
+            _ = category ?? throw new ArgumentNullException(); // here and everywhere should throw custom categorynotfound exception
             return Mapper.MapCategoryToDTO(category);
+        }
+
+    }
+
+    public class GetCategoryByIdValidator : AbstractValidator<GetCategoryById>
+    {
+        public GetCategoryByIdValidator()
+        {
+            RuleFor(c => c.Id).GreaterThan(0);
         }
     }
 }
