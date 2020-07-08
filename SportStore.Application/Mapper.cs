@@ -17,6 +17,9 @@ namespace SportStore.Application.Products
 
         public ProductDTO MapProductToDTO(Product product)
         {
+            //this is smelly
+            if (product is null)
+                return null;           
 
             return new ProductDTO
             {
@@ -31,6 +34,9 @@ namespace SportStore.Application.Products
 
         public CategoryDTO MapCategoryToDTO(Category category)
         {
+            if (category is null)
+                return null;
+
             return new CategoryDTO()
             {
                 Id = category.Id,
@@ -151,7 +157,7 @@ namespace SportStore.Application.Products
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                CategoryId = dto.Id,
+                CategoryId = dto.CategoryId,
                 Description = dto.Description,
                 Price = dto.Price
             };

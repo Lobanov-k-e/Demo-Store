@@ -41,11 +41,11 @@ namespace SportStore.UnitTests.UnitTests.Application.CategoriesTests
         }
 
         [Test]
-        public async Task Throws_On_WrongId()
+        public void Throws_On_WrongId()
         {           
 
             var command = CommandFactory.GetEditCategoryCommand(10000, "name", "description");
-            Assert.ThrowsAsync<ArgumentNullException>( async () => await new EditCategoryHandler(context, mapper).Handle(command));
+            Assert.ThrowsAsync<ArgumentException>( async () => await new EditCategoryHandler(context, mapper).Handle(command));
 
         }
 

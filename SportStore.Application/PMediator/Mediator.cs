@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace SportStore.Application
 {
-    // I can make handlers non static
+    // I can make Handlers non static
     // registration will become time-consuming, i can register requested types on the fly
-    // and saving them in handlers for later use
+    // and saving them in Handlers for later use
 
     // handler parameters must be injected to make madiator reusable
     // or make mediator abstract and and overload MakeHandler

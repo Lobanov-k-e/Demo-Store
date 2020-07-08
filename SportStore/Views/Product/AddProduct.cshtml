@@ -1,0 +1,27 @@
+﻿@model AddProductViewModel
+
+@{   
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Add Product</h1>
+<div asp-validation-summary="All"></div>
+<form asp-action="AddProduct" asp-controller="Product" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Command.Name"></label>
+        <input asp-for="@Model.Command.Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Command.CategoryId">Category</label>
+        <select asp-for="@Model.Command.CategoryId" asp-items="@Model.GetCategorySelectList()" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Command.Description"></label>
+        <textarea asp-for="@Model.Command.Description" class="form-control" ></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Command.Price"></label>
+        <input asp-for="@Model.Command.Price" class="form-control" />
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>

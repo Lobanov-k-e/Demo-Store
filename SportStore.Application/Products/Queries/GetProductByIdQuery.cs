@@ -25,7 +25,7 @@ namespace SportStore.Application.Products.Queries
             var product = await Context
                 .Products
                 .Where(p => p.Id == request.ProductId)
-                .SingleAsync();
+                .SingleOrDefaultAsync();
                 
             return Mapper.MapProductToDTO(product);
         }

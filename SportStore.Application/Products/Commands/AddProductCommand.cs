@@ -14,10 +14,14 @@ namespace SportStore.Application.Products.Commands
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
+        public AddProductCommand()
+        {
 
+        }
         public AddProductCommand(ProductDTO product)
         {
-            _ = product ?? throw new ArgumentNullException(message: "productDTO should not pe null", paramName: nameof(product)); 
+            _ = product ?? 
+                    throw new ArgumentNullException(message: "productDTO should not pe null", paramName: nameof(product)); 
 
             Name = product.Name;
             Description = product.Description;

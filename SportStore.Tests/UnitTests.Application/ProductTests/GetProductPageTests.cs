@@ -8,8 +8,9 @@ using Moq;
 using NUnit;
 using NUnit.Framework;
 using SportStore.Application.Products.Queries;
+using SportStore.Tests.UnitTests.Application;
 
-namespace SportStore.Tests.UnitTests.Application.ProductTests
+namespace SportStore.UnitTests.Application.ProductTests
 {
     [TestFixture]
     class GetProductPageTests : TestBase

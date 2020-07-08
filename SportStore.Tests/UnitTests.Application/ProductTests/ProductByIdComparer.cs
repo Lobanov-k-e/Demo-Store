@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace SportStore.Tests.UnitTests.Application.ProductTests
+namespace SportStore.UnitTests.Application.ProductTests
 { 
     class ProductDTOByIdComparer : IComparer
     {

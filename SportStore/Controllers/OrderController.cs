@@ -27,7 +27,7 @@ namespace SportStore.WebUi.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Checkout(OrderVm order)
-        {            
+        {           
             if (_cart.TotalItems == 0)
             {
                 ModelState.AddModelError("","cart is empty");
@@ -39,8 +39,7 @@ namespace SportStore.WebUi.Controllers
                 return RedirectToAction(nameof(Completed));
             }
             else 
-                return View(order);
-           
+                return View(order);           
         }
 
         public IActionResult Completed()

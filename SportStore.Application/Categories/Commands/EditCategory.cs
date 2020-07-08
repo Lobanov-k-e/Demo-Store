@@ -34,7 +34,7 @@ namespace SportStore.Application.Categories.Commands
         public async Task<int> Handle(EditCategory request)
         {
             var category = await Context.Categories.FindAsync(request.Id);
-            _ = category ?? throw new ArgumentNullException();
+            _ = category ?? throw new ArgumentException(message: "No category with this id", nameof(request.Id));
             category.Name = request.Name;
             category.Description = request.Description;
             await Context.SaveChangesAsync(new System.Threading.CancellationToken());
