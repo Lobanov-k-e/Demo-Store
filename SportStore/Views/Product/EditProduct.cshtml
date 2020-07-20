@@ -1,12 +1,12 @@
-﻿@model AddProductViewModel
-
-@{   
+﻿@model EditProductViewModel 
+@{
+    ViewData["Title"] = "EditProduct";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Add Product</h1>
 <div asp-validation-summary="All"></div>
 <form asp-action="AddProduct" asp-controller="Product" method="post">
+    <input asp-for="@Model.Command.Id" type ="hidden" />
     <div class="form-group">
         <label asp-for="@Model.Command.Name"></label>
         <input asp-for="@Model.Command.Name" class="form-control" />
@@ -17,7 +17,7 @@
     </div>
     <div class="form-group">
         <label asp-for="@Model.Command.Description"></label>
-        <textarea asp-for="@Model.Command.Description" class="form-control" ></textarea>
+        <textarea asp-for="@Model.Command.Description" class="form-control"></textarea>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Command.Price"></label>
@@ -25,3 +25,4 @@
     </div>
     <button class="btn btn-primary">Submit</button>
 </form>
+

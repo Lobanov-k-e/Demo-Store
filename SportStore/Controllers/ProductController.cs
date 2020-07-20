@@ -46,13 +46,14 @@ namespace SportStore.WebUi.Controllers
 
         public async Task<IActionResult> EditProduct(int id)
         {
-            var product = await Mediator.Handle(new GetProductByIdQuery() { ProductId = id });
-            
+            var product = await Mediator.Handle(new GetProductByIdQuery() { ProductId = id });            
             if (product is null)
             {
                 return NotFound();
             }
-            return View(EditProductCommand.FromProduct(product));
+            var categories = await Mediator.Handle(new GetAllCategories());
+            var model = new EditProductViewModel() { Command = EditProductCommand.FromProduct(product), Categories = categories };
+            return View(model);
         }
 
         [HttpPost]
@@ -63,7 +64,9 @@ namespace SportStore.WebUi.Controllers
                 await Mediator.Handle(command);
                 return RedirectToAction(nameof(ProductList));
             }
-            return View(command);
+            var categories = await Mediator.Handle(new GetAllCategories());
+
+            return View(new EditProductViewModel() { Command = command, Categories = categories});
         }
     }
 }

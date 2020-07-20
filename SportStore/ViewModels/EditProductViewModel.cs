@@ -5,11 +5,10 @@ using System.Collections.Generic;
 
 namespace SportStore.WebUi.ViewModels
 {
-    public class AddProductViewModel
-    {       
-        public AddProductCommand Command { get; set; }
+    public class EditProductViewModel
+    {
+        public EditProductCommand Command { get; set; }
         public IEnumerable<CategoryDTO> Categories { get; set; }
-
         public IEnumerable<SelectListItem> CategorySelectList => new CategorySelectListBuilder(Categories).CategorySelectList;
     }
 }
