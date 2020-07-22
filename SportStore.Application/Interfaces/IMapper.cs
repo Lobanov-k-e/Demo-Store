@@ -15,5 +15,6 @@ namespace SportStore.Application.Interfaces
         OrderVm MapOrderToVm(Order order);
         Product MapProductToDomain(ProductDTO product);
         Category MapCategoryToDomain(CategoryDTO category);
+        IEnumerable<OrderDTO> MapOrdersToDTO(IEnumerable<Order> orders);
     }
 }

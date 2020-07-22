@@ -1,5 +1,6 @@
 ﻿using SportStore.Application.Categories.Commands;
 using SportStore.Application.Categories.Queries;
+using SportStore.Application.Orders;
 using SportStore.Application.Products.Queries;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,11 @@ namespace SportStore.UnitTests.UnitTests.Application
         {
             return new GetProductPageQuery(pageNumber, pageSize, categoryName);
         }
-      
+
+        internal static GetAllOrdersQuery GetAllOrders()
+        {
+            return new GetAllOrdersQuery();
+        }
 
         public GetAllCategories GetAllCategoriesQuery()
         {
@@ -23,6 +28,11 @@ namespace SportStore.UnitTests.UnitTests.Application
         internal static GetCategoryById GetCategoryByIdQuery(int id)
         {
             return new GetCategoryById() { Id = id };
+        }
+
+        internal static GetAllProductsQuery GetAllProducts()
+        {
+            return new GetAllProductsQuery();
         }
     }
 }

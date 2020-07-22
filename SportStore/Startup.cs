@@ -55,20 +55,20 @@ namespace SportStore
                 endpoints.MapControllerRoute(
                     name: null,
                     pattern: "{currentCategory}/Page{pageNumber:int}",
-                    defaults: new { Controller = "Product", Action = "ProductList" });
+                    defaults: new { Controller = "Product", Action = "Products" });
                 endpoints.MapControllerRoute(
                     name: null,
                     pattern: "/Page{pageNumber:int}",
-                    defaults: new { Controller = "Product", Action = "ProductList", pageNumber = 1});
+                    defaults: new { Controller = "Product", Action = "Products", pageNumber = 1});
                 endpoints.MapControllerRoute(
                    name: null,
                    pattern: "{currentCategory}",
-                   defaults: new { Controller = "Product", Action = "ProductList", pageNumber = 1 });
+                   defaults: new { Controller = "Product", Action = "Products", pageNumber = 1 });
                 endpoints.MapControllerRoute(
                    name: null,
                    pattern: "",
-                   defaults: new { Controller = "Product", Action = "ProductList", pageNumber = 1 });
-                endpoints.MapControllerRoute("default", "{controller=Product}/{action=ProductList}/{id?}");                          
+                   defaults: new { Controller = "Product", Action = "Products", pageNumber = 1 });
+                endpoints.MapControllerRoute("default", "{controller=Product}/{action=Products}/{id?}");                          
             });
         }
     }

@@ -29,7 +29,7 @@ namespace SportsStore.IntegrationTests
         {
             var webApp = _factory.CreateClient();
 
-            var response = await webApp.GetAsync($"/product/productlist");
+            var response = await webApp.GetAsync($"/product/products");
 
             Assert.IsTrue(response.IsSuccessStatusCode);                  
         }

@@ -12,7 +12,7 @@ namespace SportStore.UnitTests.UnitTests.WebUi
     class ProductControllerTests
     {
         [Test]
-        public void ProductList_Send_CorrectCommand_WithDefaults()
+        public void Products_Send_CorrectCommand_WithDefaults()
         {
             var mediatorMock = new Mock<IMediator>();            
             GetProductPageQuery query = null;
@@ -21,7 +21,7 @@ namespace SportStore.UnitTests.UnitTests.WebUi
                     .Returns(Task.FromResult(new ProductPageVM()));
             var controller = new ProductController(mediatorMock.Object);
 
-            _ = controller.ProductList(null);
+            _ = controller.Products(null);
 
             const int DefaultPageNumber = 1;
             Assert.That(query.PageNumber, Is.EqualTo(DefaultPageNumber));
@@ -33,7 +33,7 @@ namespace SportStore.UnitTests.UnitTests.WebUi
         }
 
         [Test]
-        public void ProductList_Send_CorrectCommand()
+        public void Products_Send_CorrectCommand()
         {
             var mediatorMock = new Mock<IMediator>();
             GetProductPageQuery query = null;
@@ -44,7 +44,7 @@ namespace SportStore.UnitTests.UnitTests.WebUi
 
             const int PageNumber = 3;
             const string CategoryName = "Test";
-            _ = controller.ProductList(CategoryName, PageNumber);    
+            _ = controller.Products(CategoryName, PageNumber);    
             
             Assert.That(query.PageNumber, Is.EqualTo(PageNumber));
 

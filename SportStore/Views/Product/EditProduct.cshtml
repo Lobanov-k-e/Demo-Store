@@ -5,7 +5,7 @@
 }
 
 <div asp-validation-summary="All"></div>
-<form asp-action="AddProduct" asp-controller="Product" method="post">
+<form asp-action="EditProduct" asp-controller="Product" method="post">
     <input asp-for="@Model.Command.Id" type ="hidden" />
     <div class="form-group">
         <label asp-for="@Model.Command.Name"></label>

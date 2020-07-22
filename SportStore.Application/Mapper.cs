@@ -162,5 +162,10 @@ namespace SportStore.Application.Products
                 Price = dto.Price
             };
         }
+
+        public IEnumerable<OrderDTO> MapOrdersToDTO(IEnumerable<Order> orders)
+        {
+            return orders.Select(o => new OrderDTO() { Id = o.Id, Name = o.Name }).ToList();
+        }
     }
 }

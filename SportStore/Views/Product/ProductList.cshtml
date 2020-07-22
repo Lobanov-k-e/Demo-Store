@@ -1,12 +1,34 @@
-﻿@model SportStore.Application.Products.Queries.ProductPageVM
-
+﻿@model IEnumerable<SportStore.Application.Products.Queries.ProductDTO>
 @{
     ViewData["Title"] = "ProductList";
-}
-@foreach (var product in Model.Products)
-{
-   @await Html.PartialAsync("ProductCard", product);
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div page-info="@Model.PageInfo" page-action ="ProductList" page-classes-enabled ="true" page-class="btn" page-class-normal ="btn-secondary"
-     page-class-selected ="btn-primary" page-url-currentCategory="@Model.CurrentCategory" class ="btn-group float-right m-1"></div>
+
+<table class=" table table-striped">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Id</td>
+            <td>@product.Name</td>
+            <td>@product.Description</td>
+            <td>
+                <form asp-action="DeleteProduct" method="post">
+                    <a asp-action="EditProduct" class="btn btn-sm btn-warning" asp-route-Id="@product.Id">
+                        Edit
+                    </a>
+                    <input type="hidden" name="ProductId" value="@product.Id" />
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+<a class="btn btn-primary" asp-action="AddProduct">Add new</a>
+

@@ -55,5 +55,9 @@ namespace SportStore.UnitTests.UnitTests.Application
             };
         }
 
+        internal static DeleteProductCommand DeleteProduct(int id)
+        {
+            return new DeleteProductCommand() { ProductId = id };
+        }
     }
 }

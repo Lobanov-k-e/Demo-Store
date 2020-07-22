@@ -1,6 +1,6 @@
 ﻿@model SportStore.Application.Categories.Queries.CategoryNavVm
 <a class="btn btn-secondary btn-block"
-   asp-action="ProductList"
+   asp-action="Products"
    asp-controller="Product"
    asp-route-currentcategory="">
     Home
@@ -9,7 +9,7 @@
 {
     <a class="btn btn-block 
        @(Model.CurrentCategoryName == category.Name ? "btn-success":"btn-primary")" 
-       asp-action="ProductList"
+       asp-action="Products"
        asp-controller="Product"
        asp-route-currentcategory= "@category.Name"
        asp-route-pageNumber="1">@category.Name</a>       
