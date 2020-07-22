@@ -25,6 +25,11 @@ namespace SportStore.WebUi.Controllers
             return View(new OrderVm());
         }
 
+        public async Task<IActionResult> GetAllOrders()
+        {
+            return View(await Mediator.Handle(new GetAllOrdersQuery()));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Checkout(OrderVm order)
         {           
