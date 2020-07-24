@@ -1,0 +1,29 @@
+﻿@model IEnumerable<SportStore.Application.Orders.OrderListItemDTO>
+@{
+    ViewData["Title"] = "GetAllOrders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<table class=" table table-striped">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>     
+        <th>Actions</th>
+    </tr>
+    @foreach (var order in Model)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.Name</td>            
+            <td>
+                <form asp-action="DeleteOrder" method="post">
+                    <a asp-action="EditOrder" class="btn btn-sm btn-warning" asp-route-OrderId="@order.Id">
+                        Edit
+                    </a>
+                    <input type="hidden" name="OrderId" value="@order.Id" />
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+

@@ -3,6 +3,7 @@ using SportStore.Application.Orders;
 using SportStore.Application.Orders.Commands;
 using SportStore.Application.Products.Commands;
 using SportStore.Application.Products.Queries;
+using System;
 
 namespace SportStore.UnitTests.UnitTests.Application
 {
@@ -12,6 +13,12 @@ namespace SportStore.UnitTests.UnitTests.Application
         {
             return new CreateNewOrder() { Order = order};
         }
+
+        internal static EditOrderCommand EditOrder(int id, bool isGiftWrap, bool shipped, CustomerVM customer)
+        {
+            return new EditOrderCommand() { OrderId = id, Customer = customer, IsGiftWrap = isGiftWrap, Shipped = shipped };
+        }
+
         internal static AddCategoryCommand GetAddCategoryCommand(string name, string description)
         {
             return new AddCategoryCommand { Name = name, Description = description };
@@ -58,6 +65,11 @@ namespace SportStore.UnitTests.UnitTests.Application
         internal static DeleteProductCommand DeleteProduct(int id)
         {
             return new DeleteProductCommand() { ProductId = id };
+        }
+
+        internal static DeleteOrderCommand DeleteOrder(int id)
+        {
+            return new DeleteOrderCommand() { OrderId = id };
         }
     }
 }

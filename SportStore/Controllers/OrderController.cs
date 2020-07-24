@@ -2,10 +2,9 @@
 using SportStore.Application;
 using SportStore.Application.Orders;
 using SportStore.Application.Orders.Commands;
+using SportStore.Application.Orders.Queries;
 using SportStore.WebUi.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Controllers
@@ -23,13 +22,7 @@ namespace SportStore.WebUi.Controllers
         public IActionResult Checkout()
         {
             return View(new OrderVm());
-        }
-
-        public async Task<IActionResult> GetAllOrders()
-        {
-            return View(await Mediator.Handle(new GetAllOrdersQuery()));
-        }
-
+        }     
         [HttpPost]
         public async Task<IActionResult> Checkout(OrderVm order)
         {           
@@ -51,7 +44,40 @@ namespace SportStore.WebUi.Controllers
         {
             _cart.Clear();
             return View();
+        }
 
+        public async Task<IActionResult> OrderList()
+        {
+            return View(await Mediator.Handle(new GetAllOrdersQuery()));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteOrder(DeleteOrderCommand command)
+        {
+            await Mediator.Handle(command);
+            return RedirectToAction(nameof(OrderList));
+        }
+
+        public async Task<IActionResult> EditOrder(int orderId)
+        {
+            var order = await Mediator.Handle(new GetOrderByIdQuery() { OrderId = orderId });
+            if (order is null)
+            {
+                return NotFound();
+            }
+
+            return View(EditOrderCommand.FromOrder(order));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditOrder(EditOrderCommand command)
+        {
+            if (ModelState.IsValid)
+            {
+                await Mediator.Handle(command);
+                return RedirectToAction(nameof(OrderList));
+            }
+            return View(command);
         }
     }
 }

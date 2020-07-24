@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace SportStore.Application.Orders
 {
-    public class GetAllOrdersQuery : IRequest<IEnumerable<OrderDTO>>
+    public class GetAllOrdersQuery : IRequest<IEnumerable<OrderListItemDTO>>
     {
 
     }
 
-    public class GetAllOrdersRequestHandler : RequestHandlerBase, IRequestHandler<GetAllOrdersQuery, IEnumerable<OrderDTO>>
+    public class GetAllOrdersRequestHandler : RequestHandlerBase, IRequestHandler<GetAllOrdersQuery, IEnumerable<OrderListItemDTO>>
     {
         public GetAllOrdersRequestHandler(IApplicationContext context, IMapper mapper) 
             : base(context, mapper)
         {
         }
 
-        public async Task<IEnumerable<OrderDTO>> Handle(GetAllOrdersQuery request)
+        public async Task<IEnumerable<OrderListItemDTO>> Handle(GetAllOrdersQuery request)
         {
             var orders = await Context.Orders.ToListAsync();
             return Mapper.MapOrdersToDTO(orders);

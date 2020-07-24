@@ -81,7 +81,7 @@ namespace SportStore.Application.Products
             };
         }
 
-        private AdressVm MapAdressToVM(Adress customerAdress)
+        public AdressVm MapAdressToVM(Adress customerAdress)
         {
             return new AdressVm
             {
@@ -92,6 +92,20 @@ namespace SportStore.Application.Products
                 City    = customerAdress.City,
                 State   = customerAdress.State,
                 Zip     = customerAdress.Zip
+            };
+        }
+
+        public Adress MapAdressToDomain(AdressVm vm)
+        {
+            return new Adress
+            {
+                Line1 = vm.Line1,
+                Line2 = vm.Line2,
+                Line3 = vm.Line3,
+                Country = vm.Country,
+                City = vm.City,
+                State = vm.State,
+                Zip = vm.Zip
             };
         }
 
@@ -116,26 +130,14 @@ namespace SportStore.Application.Products
                 Id = orderVm.OrderId,
                 OrderLines = MapLineVmToLies(orderVm.OrderLines),
                 Name = orderVm.Customer.Name,
-                CustomerAdress = MapAddressToDomain(orderVm.Customer.Adress),
+                CustomerAdress = MapAdressToDomain(orderVm.Customer.Adress),
                 GiftWrap = orderVm.GiftWrap,
                 Shipped = orderVm.Shipped
             };
             return order;
         }
 
-        private Adress MapAddressToDomain(AdressVm vm)
-        {
-            return new Adress
-            {
-                Line1 = vm.Line1,
-                Line2 = vm.Line2,
-                Line3 = vm.Line3,
-                Country = vm.Country,
-                City = vm.City,
-                State = vm.State,
-                Zip = vm.Zip
-            };
-        }
+     
 
         private ICollection<OrderLine> MapLineVmToLies(IEnumerable<OrderLineVm> orderLines)
         {
@@ -163,9 +165,9 @@ namespace SportStore.Application.Products
             };
         }
 
-        public IEnumerable<OrderDTO> MapOrdersToDTO(IEnumerable<Order> orders)
+        public IEnumerable<OrderListItemDTO> MapOrdersToDTO(IEnumerable<Order> orders)
         {
-            return orders.Select(o => new OrderDTO() { Id = o.Id, Name = o.Name }).ToList();
+            return orders.Select(o => new OrderListItemDTO() { Id = o.Id, Name = o.Name }).ToList();
         }
     }
 }
