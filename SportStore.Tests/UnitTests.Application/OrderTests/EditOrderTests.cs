@@ -22,7 +22,7 @@ namespace SportStore.UnitTests.UnitTests.Application.OrderTests
         }
 
         [Test]
-        public async Task CanCreateOrder()
+        public async Task CanEditOrder()
         {
             int id = context.Orders.Add(new Order()).Entity.Id;
             await context.SaveChangesAsync();

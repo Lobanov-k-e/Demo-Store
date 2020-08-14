@@ -1,6 +1,7 @@
 ﻿using SportStore.Application.Categories.Commands;
 using SportStore.Application.Categories.Queries;
 using SportStore.Application.Orders;
+using SportStore.Application.Orders.Queries;
 using SportStore.Application.Products.Queries;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,11 @@ namespace SportStore.UnitTests.UnitTests.Application
         internal static GetAllProductsQuery GetAllProducts()
         {
             return new GetAllProductsQuery();
+        }
+
+        internal static GetOrderByIdQuery GetOrderById(int id)
+        {
+            return new GetOrderByIdQuery() { OrderId = id };
         }
     }
 }

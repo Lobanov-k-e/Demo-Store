@@ -61,7 +61,12 @@ namespace SportStore.Application.Products
         }
 
         public OrderVm MapOrderToVm(Order order)
-        {           
+        {
+            if (order is null)
+            {
+                return null;
+            }
+
             return new OrderVm
             {
                 OrderId = order.Id,
