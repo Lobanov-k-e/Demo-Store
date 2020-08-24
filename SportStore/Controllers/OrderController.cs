@@ -66,7 +66,7 @@ namespace SportStore.WebUi.Controllers
                 return NotFound();
             }
 
-            return View(EditOrderCommand.FromOrder(order));
+            return View(EditOrderCommand.FromOrder(order)); // no view now
         }
 
         [HttpPost]
@@ -78,6 +78,12 @@ namespace SportStore.WebUi.Controllers
                 return RedirectToAction(nameof(OrderList));
             }
             return View(command);
+        }
+
+        public async Task<IActionResult> Details(GetOrderDetailsQuery query)
+        {
+            var order = await Mediator.Handle(query);
+            return View(order); //no view now
         }
     }
 }
