@@ -83,7 +83,7 @@ namespace SportStore.WebUi.Controllers
         public async Task<IActionResult> Details(GetOrderDetailsQuery query)
         {
             var order = await Mediator.Handle(query);
-            return View(order); //no view now
+            return View(order); 
         }
     }
 }
