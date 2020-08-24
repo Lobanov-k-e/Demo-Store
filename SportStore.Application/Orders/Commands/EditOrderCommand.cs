@@ -52,8 +52,9 @@ namespace SportStore.Application.Orders.Commands
     {
         public EditOrderValidator()
         {
+            //throws if adress or customer is null
             RuleFor(c => c.Customer.Adress.City).NotEmpty();
-            RuleFor(c => c.Customer.Adress.Country).NotEmpty();
+            RuleFor(c => c.Customer.Adress.Country).NotEmpty().WithMessage("Country should not be empty");
             RuleFor(c => c.Customer.Adress.Line1).NotEmpty();
             RuleFor(c => c.Customer.Adress.Zip).NotEmpty();
             RuleFor(c => c.Customer.Name).NotEmpty();

@@ -66,7 +66,7 @@ namespace SportStore.WebUi.Controllers
                 return NotFound();
             }
 
-            return View(EditOrderCommand.FromOrder(order)); // no view now
+            return View(EditOrderCommand.FromOrder(order)); 
         }
 
         [HttpPost]

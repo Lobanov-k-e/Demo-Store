@@ -1,0 +1,68 @@
+﻿@model SportStore.Application.Orders.Commands.EditOrderCommand
+
+@{
+    ViewData["Title"] = "EditOrder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit Order</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditOrder">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="OrderId" value="@Model.OrderId" />
+
+            <div class="form-group">
+                <label class="control-label" asp-for="@Model.Customer.Name"></label>
+                <input class="form-control" asp-for="@Model.Customer.Name" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="@Model.Customer.Adress.Country"></label>
+                <input class="form-control" asp-for="@Model.Customer.Adress.Country" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="@Model.Customer.Adress.State"></label>
+                <input class="form-control" asp-for="@Model.Customer.Adress.State" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="@Model.Customer.Adress.City"></label>
+                <input class="form-control" asp-for="@Model.Customer.Adress.City" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="@Model.Customer.Adress.Zip"></label>
+                <input class="form-control" asp-for="@Model.Customer.Adress.Zip" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="@Model.Customer.Adress.Line1"></label>
+                <input class="form-control" asp-for="@Model.Customer.Adress.Line1" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="@Model.Customer.Adress.Line2"></label>
+                <input class="form-control" asp-for="@Model.Customer.Adress.Line2" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="@Model.Customer.Adress.Line3"></label>
+                <input class="form-control" asp-for="@Model.Customer.Adress.Line3" />
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsGiftWrap" /> @Html.DisplayNameFor(model => model.IsGiftWrap)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Shipped" /> @Html.DisplayNameFor(model => model.Shipped)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="OrderList">Back to List</a>
+</div>
+
