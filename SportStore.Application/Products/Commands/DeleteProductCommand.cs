@@ -25,7 +25,7 @@ namespace SportStore.Application.Products.Commands
         public async Task<int> Handle(DeleteProductCommand request)
         {
             var product = await _context.Products.FindAsync(request.ProductId);
-            _ = product ?? throw new ArgumentException(message: $"Product with id {request.ProductId}  not found");
+            _ = product ?? throw new ArgumentException(message: $"Product with id {request.ProductId} not found");
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
