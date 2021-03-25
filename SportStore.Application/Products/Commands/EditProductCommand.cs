@@ -17,7 +17,7 @@ namespace SportStore.Application.Products.Commands
         public static EditProductCommand FromProduct(ProductDTO product)
         {
             _ = product ??
-                    throw new ArgumentNullException(message: "productDTO should not pe null", paramName: nameof(product));
+                    throw new ArgumentNullException(message: "productDTO should not be null", paramName: nameof(product));
 
 
             return new EditProductCommand()
