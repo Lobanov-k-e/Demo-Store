@@ -1,6 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using SportStore.Application;
+using SportStore.Application.Interfaces;
 using SportStore.Application.Products.Queries;
+using System;
 using System.Threading.Tasks;
 
 namespace SportStore.Tests.UnitTests.Application.MediatorTests
@@ -8,18 +11,11 @@ namespace SportStore.Tests.UnitTests.Application.MediatorTests
     [TestFixture]
     class MediatorTests : TestBase
     {
-
-        [TearDown]
-        public void TearDown()
-        {
-            ResetMediatorBindinds();
-        }
-
+        
         [Test]
         public async Task MediatorWorks()
-        {           
-
-            var mediator = new Mediator(context, mapper);
+        {
+            Mediator mediator = GetMediator();
             Mediator.Register<GetProductPageQuery, GetProductPageQueryHandler>();
 
             var query = queryFactory.GetProductPageQuery(1, 4);
@@ -27,27 +23,29 @@ namespace SportStore.Tests.UnitTests.Application.MediatorTests
             var result = await mediator.Handle(query);
             var expected = await new GetProductPageQueryHandler(context, mapper).Handle(query);
 
-            Assert.AreEqual(expected.GetType(), result.GetType());
+            Assert.AreEqual(expected.GetType(), result.GetType());  
         }
 
         [Test]
         public void MediatorThrows_onUnregisteredHandler()
         {
-            var mediator = new Mediator(context, mapper);
-            
-            var query = queryFactory.GetProductPageQuery(1, 4);            
+            var mediator = GetMediator();
 
-            Assert.ThrowsAsync<HandlerNotFoundException>(async() => await mediator.Handle(query));     
-        }
-
-        [Test]
-        public void RegisterFromAssembly_Registers()
-        {
-            //bad test. create test data in test assembly
-            Mediator.RegisterFromAssembly(typeof(Mediator).Assembly);
             var query = queryFactory.GetProductPageQuery(1, 4);
 
-            Assert.DoesNotThrowAsync(async () => await mediator.Handle(query));
+            Assert.ThrowsAsync<HandlerNotFoundException>(async () => await mediator.Handle(query));
+        }
+
+      
+
+        private Mediator GetMediator()
+        {
+            var providerMock = new Mock<IServiceProvider>();
+            providerMock.Setup(m => m.GetService(typeof(IApplicationContext))).Returns(context);
+            providerMock.Setup(m => m.GetService(typeof(IMapper))).Returns(mapper);
+
+            var mediator = new Mediator(providerMock.Object);
+            return mediator;
         }
 
         

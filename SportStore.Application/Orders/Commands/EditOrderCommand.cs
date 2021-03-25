@@ -26,24 +26,28 @@ namespace SportStore.Application.Orders.Commands
         }
     }
 
-    public class EditOrderRequstHandler : RequestHandlerBase, IRequestHandler<EditOrderCommand, int>
+    public class EditOrderRequstHandler :  IRequestHandler<EditOrderCommand, int>
     {
-        public EditOrderRequstHandler(IApplicationContext context, IMapper mapper)
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public EditOrderRequstHandler(IApplicationContext context, IMapper mapper)            
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<int> Handle(EditOrderCommand request)
         {
-            var order = await Context.Orders.FindAsync(request.OrderId);
+            var order = await _context.Orders.FindAsync(request.OrderId);
             _ = order ?? throw new ArgumentException($"Order with id {request.OrderId} not found");
 
             order.Name = request.Customer.Name;
             order.GiftWrap = request.IsGiftWrap;
-            order.CustomerAdress = Mapper.MapAdressToDomain(request.Customer.Adress);
+            order.CustomerAdress = _mapper.MapAdressToDomain(request.Customer.Adress);
             order.Shipped = request.Shipped;
 
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
             return order.Id;
         }
         

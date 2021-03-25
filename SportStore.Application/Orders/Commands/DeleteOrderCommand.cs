@@ -13,20 +13,24 @@ namespace SportStore.Application.Orders.Commands
         public int OrderId { get; set; }
     }
 
-    public class DeleteOrderRequestHandler : RequestHandlerBase, IRequestHandler<DeleteOrderCommand, int>
+    public class DeleteOrderRequestHandler : IRequestHandler<DeleteOrderCommand, int>
     {
-        public DeleteOrderRequestHandler(IApplicationContext context, IMapper mapper)
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public DeleteOrderRequestHandler(IApplicationContext context, IMapper mapper)            
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<int> Handle(DeleteOrderCommand request)
         {
-            var order = await Context.Orders.FindAsync(request.OrderId);
+            var order = await _context.Orders.FindAsync(request.OrderId);
             _ = order ?? throw new ArgumentException(message: $"no order with id {request.OrderId}");
 
-            Context.Orders.Remove(order);
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
             return order.Id;
         }
     }

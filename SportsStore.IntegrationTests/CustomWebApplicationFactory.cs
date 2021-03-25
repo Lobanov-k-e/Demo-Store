@@ -47,7 +47,7 @@ namespace SportsStore.IntegrationTests
                     }
                     catch (Exception ex)
                     {
-                        // log error
+                        // should log error
                     }
                 }
             }).UseEnvironment("Test");

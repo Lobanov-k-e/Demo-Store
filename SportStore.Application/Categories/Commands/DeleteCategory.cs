@@ -14,19 +14,23 @@ namespace SportStore.Application.Categories.Commands
         public int Id { get; set; }
     }
 
-    public class DeleteCategoryRequestHandler : RequestHandlerBase, IRequestHandler<DeleteCategory, int>
+    public class DeleteCategoryRequestHandler : IRequestHandler<DeleteCategory, int>
     {
-        public DeleteCategoryRequestHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public DeleteCategoryRequestHandler(IApplicationContext context, IMapper mapper)             
         {
+            _context = context;
+            _mapper = mapper;
         }
 
         public async Task<int> Handle(DeleteCategory request)
         {
-            var category = await Context.Categories.Where(c=>c.Id == request.Id).SingleOrDefaultAsync();
+            var category = await _context.Categories.Where(c=>c.Id == request.Id).SingleOrDefaultAsync();
             _ = category ?? throw new ArgumentNullException();
-            Context.Categories.Remove(category);
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
             return category.Id;
         }
     }

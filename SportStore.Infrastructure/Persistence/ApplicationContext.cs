@@ -9,7 +9,7 @@ namespace SportStore.Infrastructure.Persistence
 {
     public class ApplicationContext : DbContext, IApplicationContext
     {
-        public ApplicationContext(DbContextOptions options) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }
 

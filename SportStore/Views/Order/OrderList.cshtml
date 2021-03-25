@@ -8,6 +8,7 @@
         <th>Id</th>
         <th>Name</th>     
         <th>Actions</th>
+        <th>Shipping status</th>
     </tr>
     @foreach (var order in Model)
     {
@@ -24,6 +25,20 @@
                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                 </form>
             </td>
+            <td>
+                @if (!order.Shipped)
+                {
+                    <form asp-action="ShipOrder" method="post" class="form-inline">
+                        <input type="hidden" name="OrderId" value="@order.Id" />
+                        <button type="submit" class="btn btn-sm btn-info">Ship Order</button>
+                    </form>
+                }
+                else
+                {
+                    @: Order is shipped
+                }
+            </td>
+            
         </tr>
     }
 </table>

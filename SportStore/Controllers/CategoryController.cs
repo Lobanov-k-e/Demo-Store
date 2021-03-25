@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportStore.Application;
 using SportStore.Application.Categories.Commands;
 using SportStore.Application.Categories.Queries;
@@ -12,11 +13,12 @@ namespace SportStore.WebUi.Controllers
         {
         }
 
+        [Authorize]
         public async Task<IActionResult> CategoryList()
         {            
             return View(await Mediator.Handle(new GetAllCategories()));
         }
-
+        [Authorize]
         public async Task<IActionResult> Edit(int categoryId)        
         {
             var category = await Mediator.Handle(new GetCategoryById() { Id = categoryId });
@@ -27,8 +29,7 @@ namespace SportStore.WebUi.Controllers
             }
             return View(new EditCategory(category));
         }
-
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(EditCategory command)
         {
@@ -39,9 +40,9 @@ namespace SportStore.WebUi.Controllers
             }
             return View(command);           
         }
-
+        [Authorize]
         public IActionResult Add() => View(new AddCategoryCommand());
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add(AddCategoryCommand command)
         {
@@ -52,7 +53,7 @@ namespace SportStore.WebUi.Controllers
             }
             return View(command);
         }
-
+        [Authorize]
         public async Task<IActionResult> Delete(int categoryId)
         {
             var category = await Mediator.Handle(new GetCategoryById { Id = categoryId });
@@ -63,7 +64,7 @@ namespace SportStore.WebUi.Controllers
             return View(category);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Delete"), Authorize]
         public async Task<IActionResult> DeleteConfirmed(DeleteCategory command)
         {
             await Mediator.Handle(command);

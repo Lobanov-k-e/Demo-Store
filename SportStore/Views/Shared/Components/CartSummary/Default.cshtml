@@ -10,10 +10,13 @@
                 @Model.Item1 item(s) for @Model.Item2.ToString("c")
             </small>
         }
+        @if (!Context.Request.Path.StartsWithSegments("/Cart"))
+        {
         <a class="btn btn-sm @cartCss" asp-controller="Cart"
            asp-action="ShowCart"
            asp-route-returnurl="@Context.Request.GetPathAndQuery()">
             <i class="fa fa-shopping-cart"></i>
         </a>
+        }
     </div>
     

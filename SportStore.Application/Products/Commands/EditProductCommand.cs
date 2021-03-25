@@ -31,16 +31,18 @@ namespace SportStore.Application.Products.Commands
         }
     }
 
-    public class EditProductRequestHandler : RequestHandlerBase, IRequestHandler<EditProductCommand, int>
+    public class EditProductRequestHandler : IRequestHandler<EditProductCommand, int>
     {
-        public EditProductRequestHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+
+        public EditProductRequestHandler(IApplicationContext context)
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<int> Handle(EditProductCommand request)
         {
-            var product = await Context.Products.FindAsync(request.Id);
+            var product = await _context.Products.FindAsync(request.Id);
             _ = product ?? 
                 throw new ArgumentException(paramName: nameof(request.Id), message:"No product with this id");
 
@@ -49,7 +51,7 @@ namespace SportStore.Application.Products.Commands
             product.CategoryId = request.CategoryId;
             product.Price = request.Price;
 
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            await _context.SaveChangesAsync( );
 
             return product.Id;
         }       

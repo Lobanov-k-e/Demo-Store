@@ -41,19 +41,22 @@ namespace SportStore.Application.Products.Commands
         }
     }
 
-    public class AddProductRequestHandler : RequestHandlerBase, IRequestHandler<AddProductCommand, int>
+    public class AddProductRequestHandler :  IRequestHandler<AddProductCommand, int>
     {
-        public AddProductRequestHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public AddProductRequestHandler(IApplicationContext context, IMapper mapper)             
         {
-           
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<int> Handle(AddProductCommand request)
         {
-            var product = Mapper.MapProductToDomain(request.GetProductDTO());
-            await Context.Products.AddAsync(product);
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            var product = _mapper.MapProductToDomain(request.GetProductDTO());
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
             return product.Id;           
         }
     }

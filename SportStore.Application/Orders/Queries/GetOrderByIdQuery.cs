@@ -12,17 +12,21 @@ namespace SportStore.Application.Orders.Queries
     }
 
 
-    public class GetOrderByIdRequestHandler : RequestHandlerBase, IRequestHandler<GetOrderByIdQuery, OrderVm>
+    public class GetOrderByIdRequestHandler : IRequestHandler<GetOrderByIdQuery, OrderVm>
     {
-        public GetOrderByIdRequestHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public GetOrderByIdRequestHandler(IApplicationContext context, IMapper mapper)             
         {
+            _context = context;
+            _mapper = mapper;
         }
 
         public async Task<OrderVm> Handle(GetOrderByIdQuery request)
         {
-            var order = await Context.Orders.FindAsync(request.OrderId);
-            return Mapper.MapOrderToVm(order);
+            var order = await _context.Orders.FindAsync(request.OrderId);
+            return _mapper.MapOrderToVm(order);
         }
     }
 }

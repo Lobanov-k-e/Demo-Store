@@ -10,21 +10,25 @@ namespace SportStore.Application.Products.Queries
         public int ProductId { get; set; }
     }
 
-    public class GetProductByIdHandler : RequestHandlerBase, IRequestHandler<GetProductByIdQuery, ProductDTO>
+    public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductDTO>
     {
-        public GetProductByIdHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public GetProductByIdHandler(IApplicationContext context, IMapper mapper)            
         {
+            _context = context ?? throw new System.ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
         }
 
         public async Task<ProductDTO> Handle(GetProductByIdQuery request)
         {
-            var product = await Context
+            var product = await _context
                 .Products
                 .Where(p => p.Id == request.ProductId)
                 .SingleOrDefaultAsync();
                 
-            return Mapper.MapProductToDTO(product);
+            return _mapper.MapProductToDTO(product);
         }
     }
 }

@@ -32,11 +32,11 @@ namespace SportStore.WebUi.Controllers
             return View(new CartViewModel(_cart, returnUrl));
         }
         [HttpPost]
-        public async Task<IActionResult> RemoveFromCart(int productId)
+        public async Task<IActionResult> RemoveFromCart(int productId, string returnUrl)
         {
             var product = await Mediator.Handle(new GetProductByIdQuery() { ProductId = productId });            
             _cart.RemoveItem(product);
-            return RedirectToAction("ShowCart");
+            return RedirectToAction("ShowCart", new {returnUrl});
         }
     }
 }

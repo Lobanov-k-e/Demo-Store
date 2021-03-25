@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportStore.Application;
 using SportStore.Application.Categories.Queries;
 using SportStore.Application.Products.Commands;
 using SportStore.Application.Products.Queries;
+using SportStore.Infrastructure.Authorization;
 using SportStore.WebUi.Common;
 using SportStore.WebUi.ViewModels;
 using System.Threading.Tasks;
@@ -11,25 +13,25 @@ namespace SportStore.WebUi.Controllers
 {
     public class ProductController : ControllerBase
     {
-        private const string PRODUCTLIST_ACTION = nameof(ProductList);
+        private const string PRODUCTLIST_ACTION = nameof(ProductList);       
 
         public ProductController(IMediator mediator) : base(mediator)
         {
-
+           
         }
 
         public async Task<ActionResult> Products(string currentCategory, int pageNumber = 1)
         {
-            int pageSize = 3;
+            int pageSize = 3; 
             var result = await Mediator.Handle(new GetProductPageQuery(pageNumber, pageSize, currentCategory));
             return View(result);
         }
-
+        [Authorize]
         public async Task<IActionResult> ProductList()
         {
             return View(await Mediator.Handle(new GetAllProductsQuery()));
         }
-
+        [Authorize]
         public async Task<IActionResult> AddProduct()
         {            
             var categories = await Mediator.Handle(new GetAllCategories());
@@ -38,6 +40,7 @@ namespace SportStore.WebUi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddProduct(AddProductCommand command)
         {
             if (ModelState.IsValid)
@@ -49,7 +52,7 @@ namespace SportStore.WebUi.Controllers
 
             return View(new AddProductViewModel() { Command = command, Categories = categories});
         }
-
+        [Authorize]
         public async Task<IActionResult> EditProduct(int id)
         {
             var product = await Mediator.Handle(new GetProductByIdQuery() { ProductId = id });            
@@ -63,6 +66,7 @@ namespace SportStore.WebUi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> EditProduct(EditProductCommand command)
         {
             if (ModelState.IsValid)
@@ -77,6 +81,7 @@ namespace SportStore.WebUi.Controllers
               
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> DeleteProduct(DeleteProductCommand command)
         {
             await Mediator.Handle(command);

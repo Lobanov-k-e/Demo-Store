@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SportStore.Infrastructure;
+using SportStore.Infrastructure.Authorization;
 using SportStore.Infrastructure.Persistence;
 
 namespace SportStore
@@ -25,14 +27,25 @@ namespace SportStore
 
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationContext>();
+                    var appContext = services.GetRequiredService<ApplicationContext>();
 
-                    if (context.Database.IsSqlServer())
+                    if (appContext.Database.IsSqlServer())
                     {
-                        context.Database.Migrate();
+                        appContext.Database.Migrate();
                     }
 
-                    await SeedData.Initialize(context);
+                    var identityContext = services.GetRequiredService<IdentityContext>();
+
+                    if (identityContext.Database.IsSqlServer())
+                    {
+                        identityContext.Database.Migrate();
+                    }
+
+                    //await SeedData.Initialize(appContext);
+
+                    //var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+
+                    //await SeedIdentity.Initialize(userManager);
                 }
                 catch (Exception ex)
                 {

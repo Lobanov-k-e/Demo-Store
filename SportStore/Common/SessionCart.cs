@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using SportStore.Application.Products.Queries;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportStore.WebUi.Common
 {
@@ -18,10 +15,10 @@ namespace SportStore.WebUi.Common
         private readonly ICart _cart;
         private readonly ISession _session;
 
-        public SessionCart(ICart cart, ISession session)
+        private SessionCart(ICart cart, ISession session)
         {
             _cart = cart ?? throw new ArgumentNullException(nameof(cart));
-            _session = session;
+            _session = session ?? throw new ArgumentNullException(nameof(session));
         }
         public static ICart GetCart(IServiceProvider services)
         {

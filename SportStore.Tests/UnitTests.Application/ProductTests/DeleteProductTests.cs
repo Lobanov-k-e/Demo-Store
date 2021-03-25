@@ -26,7 +26,7 @@ namespace SportStore.UnitTests.UnitTests.Application.ProductTests
             int productCount = await context.Products.CountAsync();
 
             var command = CommandFactory.DeleteProduct(id);
-            await new DeleteProductRequestHandler(context, mapper).Handle(command);
+            await new DeleteProductRequestHandler(context).Handle(command);
 
             Assert.AreEqual(productCount - 1 , await context.Products.CountAsync());
         }
@@ -39,7 +39,7 @@ namespace SportStore.UnitTests.UnitTests.Application.ProductTests
             
 
             var command = CommandFactory.DeleteProduct(id);
-            await new DeleteProductRequestHandler(context, mapper).Handle(command);
+            await new DeleteProductRequestHandler(context).Handle(command);
 
             var product = await context.Products.FindAsync(id);
 
@@ -54,7 +54,7 @@ namespace SportStore.UnitTests.UnitTests.Application.ProductTests
             var command = CommandFactory.DeleteProduct(invalidId);
 
             Assert.ThrowsAsync<ArgumentException>(async () => 
-                                await new DeleteProductRequestHandler(context, mapper).Handle(command));
+                                await new DeleteProductRequestHandler(context).Handle(command));
         }
 
         [TestCase(-1)]

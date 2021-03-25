@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace SportStore.Application.Products
 {
+    //TO DO change to automapper
     public class Mapper : IMapper
     {
         public IEnumerable<ProductDTO> MapProductsToDTO(List<Product> products)
@@ -172,7 +173,7 @@ namespace SportStore.Application.Products
 
         public IEnumerable<OrderListItemDTO> MapOrdersToDTO(IEnumerable<Order> orders)
         {
-            return orders.Select(o => new OrderListItemDTO() { Id = o.Id, Name = o.Name }).ToList();
+            return orders.Select(o => new OrderListItemDTO() { Id = o.Id, Name = o.Name, Shipped = o.Shipped }).ToList();
         }
     }
 }

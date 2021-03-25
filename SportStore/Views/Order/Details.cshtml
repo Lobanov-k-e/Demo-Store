@@ -59,7 +59,24 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Customer.Adress.Line3)
         </dd>
-
+        <dt class=" col-sm-2">
+            Products
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                </tr>
+                @foreach (var line in Model.OrderLines)
+                {
+                    <tr>
+                        <td>@line.Product.Name</td>
+                        <td>@line.Quantity</td>
+                    </tr>
+                }
+            </table>
+        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Shipped)
         </dt>

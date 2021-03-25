@@ -15,22 +15,27 @@ namespace SportStore.Application.Categories.Commands
         public string Description { get; set; }
     }
 
-    public class AddCategoryRequestHandler : RequestHandlerBase, IRequestHandler<AddCategoryCommand, int>
+    public class AddCategoryRequestHandler : IRequestHandler<AddCategoryCommand, int>
     {
-        public AddCategoryRequestHandler(IApplicationContext context, IMapper mapper) : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public AddCategoryRequestHandler(IApplicationContext context, IMapper mapper)
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<int> Handle(AddCategoryCommand request)
         {
-            Category category = Mapper.MapCategoryToDomain(
+            Category category = _mapper.MapCategoryToDomain(
                 new CategoryDTO() 
                 { 
                     Name = request.Name, 
                     Description = request.Description
                 });
-            Context.Categories.Add(category);
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
             return category.Id;
         }        
     }

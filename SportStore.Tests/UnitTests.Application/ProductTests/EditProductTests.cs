@@ -35,7 +35,7 @@ namespace SportStore.UnitTests.Application.ProductTests
             int catId = context.Categories.Last().Id;
             var command = CommandFactory.EditProductCommand(productId, Name, Description, catId, Price);
 
-            int actualId = await new EditProductRequestHandler(context, mapper).Handle(command);
+            int actualId = await new EditProductRequestHandler(context).Handle(command);
             var actualProduct = await context.Products.FindAsync(actualId);
 
             Assert.IsNotNull(actualProduct);
@@ -51,7 +51,7 @@ namespace SportStore.UnitTests.Application.ProductTests
             int wrongId = await context.Products.CountAsync() + 1;
             var command = CommandFactory.EditProductCommand(wrongId, "Name", "Description", 1, 189m);
 
-            Assert.ThrowsAsync<ArgumentException>(async () => await new EditProductRequestHandler(context, mapper).Handle(command));
+            Assert.ThrowsAsync<ArgumentException>(async () => await new EditProductRequestHandler(context).Handle(command));
         }
 
         [Test]

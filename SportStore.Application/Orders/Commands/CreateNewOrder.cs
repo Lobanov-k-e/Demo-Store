@@ -13,19 +13,23 @@ namespace SportStore.Application.Orders.Commands
         public OrderVm Order { get; set; }
     }
 
-    public class CreateNewOrderHandler : RequestHandlerBase, IRequestHandler<CreateNewOrder, int>
+    public class CreateNewOrderHandler : IRequestHandler<CreateNewOrder, int>
     {
-        public CreateNewOrderHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public CreateNewOrderHandler(IApplicationContext context, IMapper mapper)             
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<int> Handle(CreateNewOrder request)
         {
-            var order = Mapper.MapOrderVmToDomain(request.Order);
-            Context.Products.AttachRange(order.OrderLines.Select(p => p.Product));
-            Context.Orders.Add(order);
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            var order = _mapper.MapOrderVmToDomain(request.Order);
+            _context.Products.AttachRange(order.OrderLines.Select(p => p.Product));
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
             return order.Id;
         }
     }

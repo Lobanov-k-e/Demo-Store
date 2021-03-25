@@ -9,26 +9,18 @@ namespace SportStore.Tests.UnitTests.Application
 {
     class TestBase
     {
-        protected ApplicationContext context;
-        protected Mediator mediator;
+        protected ApplicationContext context;        
         protected IMapper mapper = new Mapper();
         protected QueryFactory queryFactory = new QueryFactory();
 
         public TestBase()
         {
-            context = DbContextFactory.Create();
-            mediator = new MockMetiator(context, mapper);
+            context = DbContextFactory.Create();            
         }
         public TestBase(bool asNoTracking)
         {
-            context = DbContextFactory.Create(asNoTracking);
-            mediator = new MockMetiator(context, mapper);
-        }
-
-        public void ResetMediatorBindinds()
-        {
-            (mediator as MockMetiator).ClearHandlers();
-        }
+            context = DbContextFactory.Create(asNoTracking);            
+        }       
 
         public void CreateNewContext(bool asNoTracking = false)
         {

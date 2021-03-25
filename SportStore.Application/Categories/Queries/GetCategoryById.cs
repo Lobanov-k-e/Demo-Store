@@ -12,17 +12,22 @@ namespace SportStore.Application.Categories.Queries
         public int Id { get; set; }
     }
 
-    public class GetCategoryByIdHandler : RequestHandlerBase, IRequestHandler<GetCategoryById, CategoryDTO>
+    public class GetCategoryByIdHandler :  IRequestHandler<GetCategoryById, CategoryDTO>
     {
-        public GetCategoryByIdHandler(IApplicationContext context, IMapper mapper) : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public GetCategoryByIdHandler(IApplicationContext context, IMapper mapper)
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<CategoryDTO> Handle(GetCategoryById request)
         {
-            var category = await Context.Categories.SingleOrDefaultAsync(c => c.Id == request.Id);
+            var category = await _context.Categories.SingleOrDefaultAsync(c => c.Id == request.Id);
             _ = category ?? throw new ArgumentNullException(); // here and everywhere should throw custom categorynotfound exception
-            return Mapper.MapCategoryToDTO(category);
+            return _mapper.MapCategoryToDTO(category);
         }
 
     }

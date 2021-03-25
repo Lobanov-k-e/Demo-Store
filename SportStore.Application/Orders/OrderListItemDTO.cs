@@ -8,5 +8,6 @@ namespace SportStore.Application.Orders
     {
         public int Id { get; set; }
         public string Name { get; set; }        
+        public bool Shipped { get; set; }
     }
 }

@@ -25,19 +25,24 @@ namespace SportStore.Application.Categories.Commands
         public string Description { get; set; }
     }
 
-    public class EditCategoryHandler : RequestHandlerBase, IRequestHandler<EditCategory, int>
+    public class EditCategoryHandler : IRequestHandler<EditCategory, int>
     {
-        public EditCategoryHandler(IApplicationContext context, IMapper mapper) : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public EditCategoryHandler(IApplicationContext context, IMapper mapper) 
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<int> Handle(EditCategory request)
         {
-            var category = await Context.Categories.FindAsync(request.Id);
+            var category = await _context.Categories.FindAsync(request.Id);
             _ = category ?? throw new ArgumentException(message: "No category with this id", nameof(request.Id));
             category.Name = request.Name;
             category.Description = request.Description;
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
             return category.Id;
         }
     }

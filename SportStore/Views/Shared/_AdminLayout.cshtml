@@ -4,11 +4,26 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" asp-href-include="/lib/twitter-bootstrap/css/*.min.css"
-          asp-href-exclude="**/*-reboot*, **/*-grid*" />    
+          asp-href-exclude="**/*-reboot*, **/*-grid*" /> 
+    
     <title>Sport Store</title>
 </head>
 <body>
-    <div class="row m-1 p-1"> 
+    <div class="row m-1 p-1">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Order"asp-action="OrderList">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Product" asp-action="ProductList">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Category" asp-action="CategoryList">Categories</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row m-1 p-1">
         <div id="content" class="col-12">
             @RenderBody()
         </div>

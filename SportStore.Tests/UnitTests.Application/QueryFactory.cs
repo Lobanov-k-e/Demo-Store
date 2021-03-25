@@ -1,11 +1,7 @@
-﻿using SportStore.Application.Categories.Commands;
-using SportStore.Application.Categories.Queries;
+﻿using SportStore.Application.Categories.Queries;
 using SportStore.Application.Orders;
 using SportStore.Application.Orders.Queries;
 using SportStore.Application.Products.Queries;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SportStore.UnitTests.UnitTests.Application
 {

@@ -11,19 +11,22 @@ namespace SportStore.Application.Categories.Queries
         public string CurrentCategoryName { get; set; }
     }
 
-    public class GetAllCategoriesQueryHandler : RequestHandlerBase, IRequestHandler<GetCategoiesNavQuery, CategoryNavVm>
-    {     
+    public class GetAllCategoriesQueryHandler : IRequestHandler<GetCategoiesNavQuery, CategoryNavVm>
+    {
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public GetAllCategoriesQueryHandler(IApplicationContext context, IMapper mapper) : base(context, mapper)
+        public GetAllCategoriesQueryHandler(IApplicationContext context, IMapper mapper)
         {
-            
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         public async Task<CategoryNavVm> Handle(GetCategoiesNavQuery request)
         {
-            var categories = await Context.Categories.ToListAsync();
+            var categories = await _context.Categories.ToListAsync();
             return new CategoryNavVm()
             {
-                Categories = Mapper.MapCategoriesToDTO(categories),
+                Categories = _mapper.MapCategoriesToDTO(categories),
                 CurrentCategoryName = request.CurrentCategoryName
             };
         }

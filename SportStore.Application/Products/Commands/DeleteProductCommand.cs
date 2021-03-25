@@ -12,20 +12,23 @@ namespace SportStore.Application.Products.Commands
         public int ProductId { get; set; }
     }
 
-    public class DeleteProductRequestHandler : RequestHandlerBase, IRequestHandler<DeleteProductCommand, int>
+    public class DeleteProductRequestHandler : IRequestHandler<DeleteProductCommand, int>
     {
-        public DeleteProductRequestHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+      
+
+        public DeleteProductRequestHandler(IApplicationContext context)             
         {
+            _context = context ?? throw new ArgumentNullException(nameof(context));            
         }
 
         public async Task<int> Handle(DeleteProductCommand request)
         {
-            var product = await Context.Products.FindAsync(request.ProductId);
+            var product = await _context.Products.FindAsync(request.ProductId);
             _ = product ?? throw new ArgumentException(message: $"Product with id {request.ProductId}  not found");
 
-            Context.Products.Remove(product);
-            await Context.SaveChangesAsync(new System.Threading.CancellationToken());
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
 
             return product.Id;
         }

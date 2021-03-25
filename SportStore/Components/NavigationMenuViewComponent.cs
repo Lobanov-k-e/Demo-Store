@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿ using Microsoft.AspNetCore.Mvc;
 using SportStore.Application;
 using SportStore.Application.Categories.Queries;
 using SportStore.Application.Products.Queries;

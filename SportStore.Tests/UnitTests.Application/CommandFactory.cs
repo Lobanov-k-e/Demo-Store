@@ -71,5 +71,10 @@ namespace SportStore.UnitTests.UnitTests.Application
         {
             return new DeleteOrderCommand() { OrderId = id };
         }
+
+        internal static ShipOrderCommand ShipOrderCommand(int id)
+        {
+            return new ShipOrderCommand() { OrderId = id };
+        }
     }
 }

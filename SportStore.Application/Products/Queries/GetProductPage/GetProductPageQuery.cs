@@ -21,13 +21,15 @@ namespace SportStore.Application.Products.Queries
         public string CurrentCategory { get;}
     }
 
-    public class GetProductPageQueryHandler : RequestHandlerBase, IRequestHandler<GetProductPageQuery, ProductPageVM>
+    public class GetProductPageQueryHandler : IRequestHandler<GetProductPageQuery, ProductPageVM>
     {
-      
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public GetProductPageQueryHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)                 
+        public GetProductPageQueryHandler(IApplicationContext context, IMapper mapper)                              
         {
+            _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ProductPageVM> Handle(GetProductPageQuery request)
@@ -35,7 +37,7 @@ namespace SportStore.Application.Products.Queries
 
             int offset = GetOffset(request);
 
-            var products = await Context.Products
+            var products = await _context.Products
                 .Include(p => p.Category)
                 .Where(ByCategoryNameFilter(request))
                 .OrderBy(p => p.Id)
@@ -43,17 +45,17 @@ namespace SportStore.Application.Products.Queries
                 .Take(request.PageSize)
                 .ToListAsync();
 
-            int productsCount = await Context.Products
+            int productsCount = await _context.Products
                 .CountAsync(ByCategoryNameFilter(request));
 
             var Vm = new ProductPageVM()
             {
-                Products = Mapper.MapProductsToDTO(products),
+                Products = _mapper.MapProductsToDTO(products),
                 CurrentCategory = request.CurrentCategory,
                 PageInfo = new PageInfo()
                 {
                     ItemsCount = productsCount,
-                    CurrentPage = request.PageNumber, //проблема - отображаемая страница при < 0
+                    CurrentPage = request.PageNumber, 
                     ItemsPerPage = request.PageSize
                 }
             };

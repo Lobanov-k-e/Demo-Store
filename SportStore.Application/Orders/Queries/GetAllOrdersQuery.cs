@@ -12,17 +12,21 @@ namespace SportStore.Application.Orders
 
     }
 
-    public class GetAllOrdersRequestHandler : RequestHandlerBase, IRequestHandler<GetAllOrdersQuery, IEnumerable<OrderListItemDTO>>
+    public class GetAllOrdersRequestHandler : IRequestHandler<GetAllOrdersQuery, IEnumerable<OrderListItemDTO>>
     {
-        public GetAllOrdersRequestHandler(IApplicationContext context, IMapper mapper) 
-            : base(context, mapper)
+        private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
+
+        public GetAllOrdersRequestHandler(IApplicationContext context, IMapper mapper)             
         {
+            _context = context;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<OrderListItemDTO>> Handle(GetAllOrdersQuery request)
         {
-            var orders = await Context.Orders.ToListAsync();
-            return Mapper.MapOrdersToDTO(orders);
+            var orders = await _context.Orders.ToListAsync();
+            return _mapper.MapOrdersToDTO(orders);
         }
     }
 }

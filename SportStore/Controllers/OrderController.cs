@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportStore.Application;
 using SportStore.Application.Orders;
 using SportStore.Application.Orders.Commands;
@@ -46,18 +47,20 @@ namespace SportStore.WebUi.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<IActionResult> OrderList()
         {
             return View(await Mediator.Handle(new GetAllOrdersQuery()));
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> DeleteOrder(DeleteOrderCommand command)
         {
             await Mediator.Handle(command);
             return RedirectToAction(nameof(OrderList));
         }
-
+        [Authorize]
         public async Task<IActionResult> EditOrder(int orderId)
         {
             var order = await Mediator.Handle(new GetOrderByIdQuery() { OrderId = orderId });
@@ -70,6 +73,7 @@ namespace SportStore.WebUi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> EditOrder(EditOrderCommand command)
         {
             if (ModelState.IsValid)
@@ -79,11 +83,19 @@ namespace SportStore.WebUi.Controllers
             }
             return View(command);
         }
-
+        [Authorize]
         public async Task<IActionResult> Details(GetOrderDetailsQuery query)
         {
             var order = await Mediator.Handle(query);
             return View(order); 
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ShipOrder(ShipOrderCommand command)
+        {
+            await Mediator.Handle(command);
+            return RedirectToAction(nameof(OrderList));
         }
     }
 }
