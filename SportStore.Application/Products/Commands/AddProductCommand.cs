@@ -21,7 +21,7 @@ namespace SportStore.Application.Products.Commands
         public AddProductCommand(ProductDTO product)
         {
             _ = product ?? 
-                    throw new ArgumentNullException(message: "productDTO should not be null", paramName: nameof(product)); 
+                    throw new ArgumentNullException(message: "productDTO should not pe null", paramName: nameof(product)); 
 
             Name = product.Name;
             Description = product.Description;
